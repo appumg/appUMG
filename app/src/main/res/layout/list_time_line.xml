@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="hora y fecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TfechaEvento"
+        android:layout_alignBaseline="@+id/TfechaPub"
+        android:layout_alignBottom="@+id/TfechaPub"
+        android:layout_alignParentEnd="true"
+        android:textColor="#999999" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/Ttumbl"
+        android:layout_alignTop="@+id/Ttitulo"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="publicado por:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TNombPublicador"
+        android:textColor="#999999"
+        android:layout_below="@+id/Ttumbl"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="fecha publicacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/TfechaPub"
+        android:textColor="#999999"
+        android:layout_above="@+id/TNombPublicador"
+        android:layout_toEndOf="@+id/Ttumbl" />
+
+    <TextView
+        android:text="Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Ttitulo"
+        android:textColor="#000000"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
