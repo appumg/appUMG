@@ -143,10 +143,7 @@ public class time_line extends AppCompatActivity
         Toast.makeText(this, "has creado una base de datos", Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+   
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
                 .setName("time_line Page") // TODO: Define a title for the content shown.
