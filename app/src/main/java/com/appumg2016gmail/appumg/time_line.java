@@ -1,5 +1,8 @@
 package com.appumg2016gmail.appumg;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.support.design.widget.FloatingActionButton;
@@ -18,12 +21,22 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 public class time_line extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-        private ListView TimeLine;
-        private String[] contenido=new String[]{"contendio","conteido"};
-        private ArrayAdapter<String> adaptador;
-        private AdaptadorContentTimeLine adaptadorContentTimeLine;
+    private ListView TimeLine;
+    private String[] contenido = new String[]{"contendio", "conteido"};
+    private ArrayAdapter<String> adaptador;
+    private AdaptadorContentTimeLine adaptadorContentTimeLine;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
 
     @Override
@@ -34,24 +47,15 @@ public class time_line extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
-        TimeLine=(ListView)findViewById(R.id.Ttimeline);
-        adaptadorContentTimeLine= new AdaptadorContentTimeLine(this);
+        // asignnando el adaptador al listview principal
+        TimeLine = (ListView) findViewById(R.id.Ttimeline);
+        adaptadorContentTimeLine = new AdaptadorContentTimeLine(this);
         TimeLine.setAdapter(adaptadorContentTimeLine);
-
+        //se le agrega el evento on click para capturar las pulsaciones
         TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(time_line.this, "pulsaste "+i, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Toast.makeText(time_line.this, "pulsaste " + i, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -64,6 +68,9 @@ public class time_line extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -105,7 +112,7 @@ public class time_line extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_timeLine) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -121,5 +128,51 @@ public class time_line extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void evento(View view) {
+        Intent llamada = new Intent(time_line.this, agregar_item_line.class);
+        startActivity(llamada);
+        Snackbar.make(view, "trabajamos en esta opcion!! gracias! ", Snackbar.LENGTH_LONG).show();
+    }
+
+    public void noticia(View v) {
+        db_timeLine time = new db_timeLine(this, 1);
+        SQLiteDatabase db;
+        db = time.getWritableDatabase();
+        Toast.makeText(this, "has creado una base de datos", Toast.LENGTH_SHORT).show();
+    }
+
+   
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("time_line Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

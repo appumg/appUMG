@@ -23,12 +23,35 @@
 
     <include layout="@layout/content_time_line" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:layout_gravity="right|bottom"
+        app:fab_labelStyle="@style/estilo"
+        >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/crearEvento"
+            app:fab_title="Crear Evento"
+            app:fab_icon="@drawable/ic_event"
+            app:fab_labelStyle="@drawable/fondo_timeline"
+            android:elevation="0dp"
+            android:onClick="evento"
+            />
+<com.getbase.floatingactionbutton.FloatingActionButton
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/agregarNoticia"
+    app:fab_icon="@drawable/ic_add_alert_black_24dp"
+    app:fab_title="Agregar Noticia"
+    android:onClick="noticia"
+    />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
 
 </android.support.design.widget.CoordinatorLayout>

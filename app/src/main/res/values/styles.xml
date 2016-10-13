@@ -17,4 +17,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="estilo">
+        <item name="android:background">@drawable/fondo_timeline</item>
+        <item name="android:textColor">#606be7</item>
+
+    </style>
 </resources>
