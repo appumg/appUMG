@@ -63,6 +63,8 @@ private Button agregar;
                 builder.show();
             }
 
+
+            
             private void tomar_foto() {
                 File file=new File(Environment.getExternalStorageDirectory(),MEDIA_DIRECTORY);
                 boolean isDirectoryCreated=file.exists();
