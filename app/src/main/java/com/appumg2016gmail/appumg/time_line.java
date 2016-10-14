@@ -133,7 +133,7 @@ public class time_line extends AppCompatActivity
         db_timeLine time = new db_timeLine(this, 1);
         SQLiteDatabase db;
         db = time.getWritableDatabase();
-        Toast.makeText(this, "has creado una base de datos", Toast.LENGTH_SHORT).show();
+        Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
     }
 
 }
