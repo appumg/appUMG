@@ -8,18 +8,73 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.appumg2016gmail.appumg.agregar_item_line"
     tools:showIn="@layout/activity_agregar_item_line"
-
+    android:background="#ffffff"
     android:orientation="vertical"
     android:paddingTop="20dp">
+    <android.support.design.widget.TextInputLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/titulo"
+        android:padding="5dp"
+        android:hint="Titulo del Evento"
+        android:textSize="30dp"
 
+        style="@android:style/Widget.DeviceDefault.EditText" />
+    </android.support.design.widget.TextInputLayout>
+    <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2"
-        android:id="@+id/tipo_evento" />
+        android:id="@+id/publico"
+        android:layout_toEndOf="@+id/tipo_evento"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:dropDownSelector="?android:attr/actionModeCloseDrawable" />
+
+    <Spinner
+        android:layout_width="136dp"
+        android:layout_height="64dp"
+        android:id="@+id/tipo_evento"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+ />
+
+</RelativeLayout>
+
+    <android.support.design.widget.TextInputLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    >
+
+    </android.support.design.widget.TextInputLayout>
+
 <android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_alignBottom="@+id/textView3"
+        android:id="@+id/fecha"
+        android:layout_alignParentEnd="true"
+        android:hint="fecha del evento"
+        android:layout_toEndOf="@+id/textView3"
+        style="@style/bordes"
+        />
+</android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="143dp" >
     <EditText
@@ -40,29 +95,22 @@
         android:layout_width="match_parent"
             android:layout_height="64dp">
 
-        <EditText
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_alignBottom="@+id/textView3"
-            android:id="@+id/fecha"
-            android:layout_alignParentEnd="true"
-            android:hint="fecha del evento"
-            android:layout_toEndOf="@+id/textView3"
-            style="@style/bordes"
-            />
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:onClick="agregar"
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:clickable="false"
+                android:background="@drawable/ic_pick"
+                android:id="@+id/agregar"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
     </android.support.design.widget.TextInputLayout>
 
-
-    <Button
-            android:text="agregar imagen"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/agregar"
-            android:onClick="agregar"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
 
     <EditText
         android:layout_width="match_parent"
@@ -75,5 +123,32 @@
         android:clickable="false"
         android:enabled="false" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        >
 
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:id="@+id/imageButton2"
+            android:src="@drawable/ic_hecho"
+
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="#ffffff"
+            />
+
+        <ImageButton
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_cancelar"
+            android:id="@+id/imageButton3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="#ffffff"
+            />
+    </RelativeLayout>
 </LinearLayout>

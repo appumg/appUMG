@@ -17,16 +17,17 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.File;
 
 public class agregar_item_line extends AppCompatActivity {
-private Button agregar;
+private ImageButton agregar;
     private String direccion_imagen;
     private EditText descripcion,fecha,imagenes;
-    private Spinner tipo_evento;
+    private Spinner tipo_evento,publics;
     private int contador=0;
 
     private String APP_DIRECTORY="MyPictureApp/";
@@ -35,7 +36,8 @@ private Button agregar;
     private final int MI_PERMISSIONS=100;
     private final int PHOTO_CODE=200;
     private final int SELECT_PICTURE=300;
-    private final String[] opciones={"evento proximo","noticia"};
+    private final String[] opciones={"seleccione el tipo de publicacion","evento proximo","noticia"};
+    private final String[] publico={"seleccione una facultad ","ingenieria","todas las facultades"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +45,22 @@ private Button agregar;
         setContentView(R.layout.activity_agregar_item_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        agregar=(Button)findViewById(R.id.agregar);
+        //agregando referencias a botonoes de la view
+        agregar=(ImageButton)findViewById(R.id.agregar);
         descripcion=(EditText)findViewById(R.id.descripcion);
         fecha=(EditText)findViewById(R.id.fecha);
         imagenes=(EditText) findViewById(R.id.imagenes);
         tipo_evento=(Spinner)findViewById(R.id.tipo_evento);
+        publics=(Spinner)findViewById(R.id.publico);
+        //preparo los adaptadores para los spinners
+        ArrayAdapter<String> public_opciones=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,publico);
         ArrayAdapter<String> opcion =new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item,opciones);
+        //agrego los adatadores a los items
         tipo_evento.setAdapter(opcion);
+        publics.setAdapter(public_opciones);
+
+
+        //agregando efectos a edittext
         fecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -74,8 +85,9 @@ private Button agregar;
     }
 
 
-
+//metodo que captura el evento del boton agregar imagenes
     public void agregar(View view){
+        agregar.setBackgroundResource(R.drawable.ic_sube);
         CharSequence[] opciones={"de la galeria","tomar foto", "cancelar"};
         final AlertDialog.Builder builder=new AlertDialog.Builder(agregar_item_line.this);
         builder.setTitle("Elige la opcion");
@@ -107,7 +119,7 @@ private Button agregar;
         });
         builder.show();
 
-
+        agregar.setBackgroundResource(R.drawable.ic_pick);
     }
     private void tomar_foto() {
         File file=new File(Environment.getExternalStorageDirectory(),MEDIA_DIRECTORY);
@@ -118,21 +130,21 @@ private Button agregar;
             Long timestam= System.currentTimeMillis()/1000;
             String ImageName=timestam.toString()+".jpg";
 
-            if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())||!Environment.isExternalStorageRemovable()) {
-                if (Environment.getExternalStorageDirectory()!=null) {
+           /* if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())||!Environment.isExternalStorageRemovable()) {
+                if (Environment.getExternalStorageDirectory()!=null) {*/
                     direccion_imagen = Environment.getExternalStorageDirectory() + File.separator + MEDIA_DIRECTORY + file.separator + ImageName;
-                }
-            }else{
-                if(Environment.getExternalStorageDirectory()!=null){
-                    direccion_imagen= Environment.getExternalStorageDirectory() + File.separator + MEDIA_DIRECTORY + file.separator + ImageName;
-                }
+            //    }
+         //   }else{
+               // if(Environment.getExternalStorageDirectory()!=null){
+               //     direccion_imagen= Environment.getExternalStorageDirectory() + File.separator + MEDIA_DIRECTORY + file.separator + ImageName;
+              //  }
             }
             File files=new File(direccion_imagen);
             Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(files));
             startActivityForResult(intent,PHOTO_CODE);
 
-        }
+        //}
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -144,8 +156,12 @@ private Button agregar;
                             @Override
                             public void onScanCompleted(String path, Uri uri) {
                                 Log.i("",""+path);
+
                             }
+
                         });
+                       // imagenes.append("\n "+contador++ +" .-"+direccion_imagen);
+                        break;
                     case SELECT_PICTURE:
                         Uri direccion=data.getData();
                         contador++;
