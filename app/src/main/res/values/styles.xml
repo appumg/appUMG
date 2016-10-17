@@ -27,4 +27,8 @@
         <item name="android:textColor">#0a0a0a</item>
 
     </style>
+    <style name="bordestitulo">
+    <item name="android:background">@drawable/text_titulo</item>
+        <item name="android:textColor">#0a0a0a</item>
+    </style>
 </resources>

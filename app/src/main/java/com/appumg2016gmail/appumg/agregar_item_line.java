@@ -36,8 +36,8 @@ private ImageButton agregar;
     private final int MI_PERMISSIONS=100;
     private final int PHOTO_CODE=200;
     private final int SELECT_PICTURE=300;
-    private final String[] opciones={"seleccione el tipo de publicacion","evento proximo","noticia"};
-    private final String[] publico={"seleccione una facultad ","ingenieria","todas las facultades"};
+    private final String[] opciones={"tipo de publicacion","evento proximo","noticia"};
+    private final String[] publico={"la facultad ","ingenieria","todas las facultades"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ private ImageButton agregar;
         //agregando referencias a botonoes de la view
         agregar=(ImageButton)findViewById(R.id.agregar);
         descripcion=(EditText)findViewById(R.id.descripcion);
-        fecha=(EditText)findViewById(R.id.fecha);
+
         imagenes=(EditText) findViewById(R.id.imagenes);
         tipo_evento=(Spinner)findViewById(R.id.tipo_evento);
         publics=(Spinner)findViewById(R.id.publico);
@@ -58,19 +58,6 @@ private ImageButton agregar;
         //agrego los adatadores a los items
         tipo_evento.setAdapter(opcion);
         publics.setAdapter(public_opciones);
-
-
-        //agregando efectos a edittext
-        fecha.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    v.setBackgroundResource(R.drawable.bordes);
-                }else{
-                    v.setBackgroundResource(R.drawable.perdio_focus_borde);
-                }
-            }
-        });
 
 
         descripcion.setOnFocusChangeListener(new View.OnFocusChangeListener() {

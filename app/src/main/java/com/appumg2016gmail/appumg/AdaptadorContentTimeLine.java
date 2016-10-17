@@ -45,8 +45,8 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
 
     public AdaptadorContentTimeLine(Context activity){
         context=activity;
-        time=new db_timeLine(activity,1);
-        db=time.getWritableDatabase();
+      //  time=new db_timeLine(activity,1);
+      //  db=time.getWritableDatabase();
     }
 
     @Override
