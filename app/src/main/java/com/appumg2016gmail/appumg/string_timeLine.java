@@ -104,6 +104,8 @@ public class string_timeLine {
         valores.put("publico", getPublico());
         valores.put("id_imagenes",getId_imagenes());
 
+
+
         db.execSQL("insert into timeline "+valores);
         return true;
     }
