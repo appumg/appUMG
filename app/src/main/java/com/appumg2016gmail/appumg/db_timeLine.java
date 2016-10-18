@@ -14,15 +14,14 @@ public class db_timeLine extends SQLiteOpenHelper {
     private static int     version=1;
     private static String SQL="create table timeline(" +
             "id integer primary key autoincrement, " +
-            "tipo integer," +
+            "tipo text," +
             "titulo text, " +
             "descripcion text, " +
-            "fecha_pub integer," +
-            "hora_pub integer, " +
-            "fecha_evento integer," +
-            "hora_evento integer, " +
-            "publicador integer, " +
-            "id_imagenes integer)";
+            "fecha_pub text," +
+            "hora_pub text, " +
+            "fecha_evento text," +
+            "hora_evento text, " +
+            "publicador text)";
 
 
     public db_timeLine(Context context, int ver){

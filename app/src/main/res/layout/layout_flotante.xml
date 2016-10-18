@@ -11,21 +11,29 @@
 
     >
 
-    <Button
-        android:text="Button"
+    <TextView
+        android:text="Titulo de la noticia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button" />
+        android:id="@+id/titulo"
+        android:textSize="30dp"
+        android:textAlignment="center"
 
-    <ToggleButton
-        android:text="ToggleButton"
+        />
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/toggleButton" />
+        android:text="descripcion"
+        android:id="@+id/descripcion"
+        android:textSize="25dp"
+        />
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/galeria"
+        android:numColumns="auto_fit"
+        android:padding="4dp"
+        ></GridView>
 
-    <RadioButton
-        android:text="RadioButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/radioButton" />
+
 </LinearLayout>

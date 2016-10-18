@@ -9,8 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class db_imagenes extends SQLiteOpenHelper {
-    private String sql="create table "+nombre+"(id_pub integer primary key not null,direccion text not null)";
     private static String nombre="imagen";
+    private String sql="create table "+nombre+"(id_pub integer,direccion text not null)";
+
     public db_imagenes(Context context,int version){
         super(context,nombre,null,version);
     }
