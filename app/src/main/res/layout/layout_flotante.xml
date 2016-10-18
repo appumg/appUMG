@@ -7,7 +7,7 @@
     android:id="@+id/behavior"
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="14dp"
+    app:behavior_peekHeight="16dp"
 
     >
 
