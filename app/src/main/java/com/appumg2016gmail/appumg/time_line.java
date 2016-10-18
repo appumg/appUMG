@@ -3,6 +3,8 @@ package com.appumg2016gmail.appumg;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,11 +28,8 @@ public class time_line extends AppCompatActivity
     private String[] contenido = new String[]{"contendio", "conteido"};
     private ArrayAdapter<String> adaptador;
     private AdaptadorContentTimeLine adaptadorContentTimeLine;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    //
+    private LinearLayout beahavior;
+
 
 
     @Override
@@ -38,6 +38,9 @@ public class time_line extends AppCompatActivity
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        beahavior=(LinearLayout) findViewById(R.id.behavior);
+        final BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from(beahavior);
 
 
         // asignnando el adaptador al listview principal
@@ -49,12 +52,13 @@ public class time_line extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(time_line.this, "pulsaste " + i, Toast.LENGTH_SHORT).show();
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this,null, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
