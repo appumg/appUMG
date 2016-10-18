@@ -118,6 +118,8 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
                 "fecha_evento integer," +
                 "hora_evento integer, " +
                 "publicador integer)";
+
+        
         for (int a=0;a<id_publicaciones.size()+1;a++){
                Cursor Cursor_items= db_items.rawQuery("select * from timeline",null);
 
