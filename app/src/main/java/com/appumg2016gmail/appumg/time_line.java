@@ -1,8 +1,12 @@
 package com.appumg2016gmail.appumg;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,9 +19,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Gallery;
+import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.util.ArrayList;
 
 public class time_line extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,36 +34,56 @@ public class time_line extends AppCompatActivity
     private String[] contenido = new String[]{"contendio", "conteido"};
     private ArrayAdapter<String> adaptador;
     private AdaptadorContentTimeLine adaptadorContentTimeLine;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    //
+    private LinearLayout beahavior;
+    private GridView galeria;
+    private ArrayList<Integer> id_items=new ArrayList<>();
 
-
+    private ArrayList<Uri> imagenes=new ArrayList<>();
+///----- creamos objetos de la base de datos y de la clase que crea la base de datos
+    private SQLiteDatabase itemsConenedor;
+    private db_itemsTimeLine db_itemsTimeLine;
+    private int version=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        galeria=(GridView) findViewById(R.id.galeria);
 
+/// ---- cargando las bases de datos
+
+
+
+
+        galeria.setAdapter(new galeria_adaptador(this,imagenes));
+
+
+        beahavior=(LinearLayout) findViewById(R.id.behavior);
+        final BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from(beahavior);
+
+       // ArrayList<Uri> imagenes=new ArrayList<Uri>(){};
 
         // asignnando el adaptador al listview principal
         TimeLine = (ListView) findViewById(R.id.Ttimeline);
-        adaptadorContentTimeLine = new AdaptadorContentTimeLine(this);
-        TimeLine.setAdapter(adaptadorContentTimeLine);
+        //---- llamamos el metodo que cargar la linea de tiempo
+        cargar_items_a_la_linea();
+
+
+
+
         //se le agrega el evento on click para capturar las pulsaciones
         TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(time_line.this, "pulsaste " + i, Toast.LENGTH_SHORT).show();
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this,drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -65,6 +94,8 @@ public class time_line extends AppCompatActivity
         // See https://g.co/AppIndexing/AndroidStudio for more information.
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -136,4 +167,12 @@ public class time_line extends AppCompatActivity
         Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
     }
 
+    ///------ metodo que se ejecuta para cargar los items que se muestran en la linea de tiempo
+    private void cargar_items_a_la_linea() {
+
+        adaptadorContentTimeLine = new AdaptadorContentTimeLine(this);
+
+        TimeLine.setAdapter(adaptadorContentTimeLine);
+
+    }
 }

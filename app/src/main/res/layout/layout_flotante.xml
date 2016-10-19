@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/behavior"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="16dp"
+
+    >
+
+    <TextView
+        android:text="Titulo de la noticia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titulo"
+        android:textSize="30dp"
+        android:textAlignment="center"
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="descripcion"
+        android:id="@+id/descripcion"
+        android:textSize="25dp"
+        />
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/galeria"
+        android:numColumns="auto_fit"
+        android:padding="4dp"
+        ></GridView>
+
+
+</LinearLayout>

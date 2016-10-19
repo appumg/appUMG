@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,7 +26,6 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
     //--- variables nesesarias para el layout
     private Context context;
     protected Activity activity;
-    protected ArrayList<EventoItem> items;
 
             /* referenciando los botones */
     private TextView titulo;
@@ -39,19 +39,30 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
     private ArrayList<String> A_fechaPublicacion=new ArrayList<>();
     private ArrayList<Uri>    A_imagen=new ArrayList<>();
     private ArrayList<String> A_administrador=new ArrayList<>();
-    private SQLiteDatabase    db;
-    private db_timeLine       time;
+    private ArrayList<Integer> id_publicaciones=new ArrayList<>();
+
+    private SQLiteDatabase    db_items;
+    private SQLiteDatabase    db_imagen;
+    private db_timeLine       items;
+    private db_imagenes       imagenes;
+    private int version=1;
+
+
 
 
     public AdaptadorContentTimeLine(Context activity){
         context=activity;
-      //  time=new db_timeLine(activity,1);
-      //  db=time.getWritableDatabase();
+        items=new db_timeLine(context.getApplicationContext(),version);
+        imagenes=new db_imagenes(context.getApplicationContext(),version);
+        db_items=items.getWritableDatabase();
+        db_imagen=imagenes.getWritableDatabase();
+
+        obtenerDatos();
     }
 
     @Override
     public int getCount() {
-        return A_administrador.size()+1;
+        return A_administrador.size();
     }
 
     @Override
@@ -85,22 +96,54 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
             fechaPublicacion.setText(A_fechaEvento.get(a));
             fechaEvento.setText(A_fechaEvento.get(a));
             NombrePublicador.setText(A_administrador.get(a));
-            miniatura.setImageURI(A_imagen.get(a));
+           miniatura.setImageURI(A_imagen.get(a));
+            miniatura.setMaxWidth(30);
+            miniatura.setMaxHeight(40);
         }
 
         return view1;
     }
 
 
-    public void cargar(){
-        Cursor cursor=db.rawQuery("select * from timeline",null);
-        while(cursor.moveToNext()){
-                A_titulo.add(cursor.getString(3));
-                A_administrador.add(cursor.getString(8));
-                A_fechaEvento.add(cursor.getString(5));
-                A_fechaPublicacion.add(cursor.getString(4));
-                A_imagen.add(Uri.parse(cursor.getString(9)));
 
+
+    public void obtenerDatos(){
+       String SQL="create table timeline(" +
+                "id integer primary key autoincrement, " +
+                "tipo integer," +
+                "titulo text, " +
+                "descripcion text, " +
+                "fecha_pub integer," +
+                "hora_pub integer, " +
+                "fecha_evento integer," +
+                "hora_evento integer, " +
+                "publicador integer)";
+
+        
+        for (int a=0;a<id_publicaciones.size()+1;a++){
+               Cursor Cursor_items= db_items.rawQuery("select * from timeline",null);
+
+            if (Cursor_items.moveToFirst()){
+                do {
+                    A_titulo.add(Cursor_items.getString(1));
+                    A_administrador.add("publicado por:"+Cursor_items.getString(8));
+                    A_fechaEvento.add("fecha del evento: "+Cursor_items.getString(6)+" a las "+Cursor_items.getString(7));
+                    A_fechaPublicacion.add("publicado el : "+Cursor_items.getString(4)+" a las "+Cursor_items.getString(5));
+                    String ids=Cursor_items.getString(0);
+                    Toast.makeText(context, "la id es "+ids, Toast.LENGTH_SHORT).show();
+                    Cursor cursor_imagenes= db_imagen.rawQuery("select direccion from imagen where id_pub='"+ids+"'",null);
+
+                    if (cursor_imagenes.moveToFirst()) {
+                        do {
+
+                            String img=cursor_imagenes.getString(0);
+                            Uri imag=Uri.parse(img);
+                            A_imagen.add(imag);
+
+                        }while(cursor_imagenes.moveToNext());
+                    }
+                }while(Cursor_items.moveToNext());
+            }
         }
     }
 }

@@ -51,7 +51,7 @@
 
 </RelativeLayout>
 
-    
+
     <android.support.design.widget.TextInputLayout
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -71,18 +71,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_date"
-            android:id="@+id/imageButton"
+            android:id="@+id/botonCalendario"
             android:layout_alignParentTop="true"
             android:layout_toEndOf="@+id/fecha"
-            android:layout_marginStart="44dp" />
+            android:layout_marginStart="44dp"
+            android:onClick="calendario"
+            />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_hora"
             android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/imageButton"
-            android:id="@+id/imageButton4" />
+            android:layout_toEndOf="@+id/botonCalendario"
+            android:id="@+id/imageButton4"
+            android:onClick="hora"
+            />
 
         <TextView
             android:layout_width="200dp"
@@ -92,7 +96,14 @@
             android:textSize="25dp"
             android:id="@+id/fecha"
             android:hint="Dia y Hora"
-            />
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="8dp"
+            android:id="@+id/fechas"
+            android:layout_below="@+id/fecha"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
@@ -162,7 +173,7 @@
             android:layout_height="80dp"
             android:id="@+id/imageButton2"
             android:src="@drawable/ic_hecho"
-
+            android:onClick="guardar"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:background="#ffffff"
@@ -177,6 +188,7 @@
             android:layout_alignParentStart="true"
             android:background="#ffffff"
             style="@style/Widget.AppCompat.ImageButton"
+            android:onClick="cancelar"
             />
     </RelativeLayout>
 </LinearLayout>

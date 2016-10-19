@@ -52,6 +52,8 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
+    <include layout="@layout/layout_flotante"
 
+        />
 
 </android.support.design.widget.CoordinatorLayout>
