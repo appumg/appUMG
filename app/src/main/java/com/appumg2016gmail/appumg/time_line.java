@@ -103,7 +103,7 @@ public class time_line extends AppCompatActivity
             Toast.makeText(this, " galeria", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_slideshow) {
             Toast.makeText(this, " sliders", Toast.LENGTH_SHORT).show();
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_login) {
 
         } else if (id == R.id.nav_share) {
 

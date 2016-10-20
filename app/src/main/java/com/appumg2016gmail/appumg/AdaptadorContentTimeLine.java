@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 
@@ -74,13 +76,12 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
         NombrePublicador=(TextView)view1.findViewById(R.id.TNombPublicador);
         miniatura=(ImageView)view1.findViewById(R.id.Ttumbl);
         // recorriendo arreglos y agregando al item actual
-        for(int a=0;a<A_administrador.size();a++){
-            titulo.setText(A_titulo.get(a));
-            fechaPublicacion.setText(A_fechaPublicacion.get(a));
-            fechaEvento.setText(A_fechaEvento.get(a));
-            NombrePublicador.setText(A_administrador.get(a));
-            miniatura.setImageURI(A_imagen.get(a));
-        }
+            titulo.setText(A_titulo.get(i));
+            fechaPublicacion.setText(A_fechaPublicacion.get(i));
+            fechaEvento.setText(A_fechaEvento.get(i));
+            NombrePublicador.setText(A_administrador.get(i));
+            miniatura.setImageURI(A_imagen.get(i));
+
 
         return view1;
     }
@@ -101,7 +102,9 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
                 "publicador text)";
                Cursor Cursor_items= db_items.rawQuery("select * from timeline",null);
             if (Cursor_items.moveToFirst()){
+
                 do {
+
                     A_titulo.add(Cursor_items.getString(2));
                     A_administrador.add("publicado por:"+Cursor_items.getString(8));
                     A_fechaEvento.add("fecha del evento: "+Cursor_items.getString(6)+" a las "+Cursor_items.getString(7));
