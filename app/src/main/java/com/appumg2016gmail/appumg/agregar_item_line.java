@@ -29,6 +29,7 @@ import java.util.Calendar;
 public class agregar_item_line extends AppCompatActivity {
 private ImageButton agregar;
     private String direccion_imagen;
+    private EditText titulo;
     private EditText descripcion;
     private EditText imagenes;
     private Spinner tipo_evento;
@@ -90,6 +91,7 @@ private ImageButton agregar;
         db_timeline=timeLine.getWritableDatabase();
 
 //------------------agregando referencias a los campos de en la vista
+        titulo=(EditText)findViewById(R.id.titulo);
         agregar=(ImageButton)findViewById(R.id.agregar);
         descripcion=(EditText)findViewById(R.id.descripcion);
         botonCalendario=(ImageButton)findViewById(R.id.botonCalendario);
@@ -189,12 +191,10 @@ private ImageButton agregar;
         DB_diaActual=calendario.get(Calendar.DAY_OF_MONTH);
         DB_mesActual=calendario.get(Calendar.MONTH);
         DB_yearActual=calendario.get(Calendar.YEAR);
-        String tempo=""+DB_diaActual+DB_mesActual+DB_yearActual;
         DB_fechaActual=""+DB_diaActual+"/"+DB_mesActual+"/"+DB_yearActual;;
         DatePickerDialog dialogoCalendario=new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String tempo=""+dayOfMonth+monthOfYear+year;
                 V_fecha=dayOfMonth+"/"+monthOfYear+"/"+year;
                 fechas.setText(V_fecha+tiempos);
                 setDB_fecha(V_fecha);
@@ -209,13 +209,12 @@ private ImageButton agregar;
         Calendar calendario=Calendar.getInstance();
         horas=calendario.get(Calendar.HOUR_OF_DAY);
         minutos=calendario.get(Calendar.MINUTE);
-        String tempo=""+horas+minutos;
+
         DB_horaActual=""+horas+":"+minutos;
 
         final TimePickerDialog tiempo=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String tempo=""+hourOfDay+minute;
                     tiempos=" a las "+hourOfDay+":"+minute;
                    fechas.setText(V_fecha+tiempos);
                 setDB_hora(tiempos);
@@ -227,7 +226,7 @@ private ImageButton agregar;
 ///-----------evento del boton guardar
 
     public void guardar(View view){
-        setBD_titulo(descripcion.getText().toString());
+        setBD_titulo(titulo.getText().toString());
         setDB_descripcion(descripcion.getText().toString());
         boolean estado; /// comprobara el contenido de las variables que se deben guardar
         estado=getBD_titulo().isEmpty();
@@ -266,7 +265,7 @@ private ImageButton agregar;
                 "id_imagenes integer)";
 
             db_timeline.execSQL("insert into timeline(tipo,titulo ,descripcion,fecha_pub,hora_pub,fecha_evento,hora_evento,publicador) values('"+
-            getDB_tipoPublicacion()+"','"+getBD_titulo()+"','"+getDB_descripcion()+"','"+DB_fechaActual+"','"+DB_fechaActual+"','"+getDB_fecha()+"','"+getDB_hora()+"','"+
+            getDB_tipoPublicacion()+"','"+getBD_titulo()+"','"+getDB_descripcion()+"','"+DB_fechaActual+"','"+DB_horaActual+"','"+getDB_fecha()+"','"+getDB_hora()+"','"+
             getDB_publicador()+"')");
 
             // obtenemos la id de los datos que acabamos de ingresar

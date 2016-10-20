@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,7 +24,7 @@
 
     <include layout="@layout/content_time_line" />
 
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
+  <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,6 +42,8 @@
             android:elevation="0dp"
             android:onClick="evento"
             />
+
+
 <com.getbase.floatingactionbutton.FloatingActionButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -50,10 +53,10 @@
     android:onClick="noticia"
     />
 
+
+
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    <include layout="@layout/layout_flotante"
-
-        />
+      <include layout="@layout/layout_flotante"/>
 
 </android.support.design.widget.CoordinatorLayout>
