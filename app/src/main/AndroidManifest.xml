@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appumg2016gmail.appumg">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/><!--Acceso a internet-->
+    <uses-permission android:name="android.permission.CAMERA" /><!--Acceso a la camara-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!--Acceso a Escribir en memoria -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /><!--Acceso leer en memoria-->
 
     <application
         android:allowBackup="true"
