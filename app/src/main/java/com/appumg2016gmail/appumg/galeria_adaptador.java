@@ -24,11 +24,11 @@ public class galeria_adaptador extends BaseAdapter {
     ArrayList<Uri> lista=new ArrayList<>();
 
 
-    private int id;
+    private int id=globales.id_imagen;
 
     ImageView imageView;
-    public galeria_adaptador(Context contexto,int id){
-       this.id=id;
+    public galeria_adaptador(Context contexto){
+
         context=contexto;
        cargar();
 

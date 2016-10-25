@@ -37,7 +37,7 @@ public class bottonflotante extends BottomSheetDialogFragment {
         cargar();
         View view=inflater.inflate(R.layout.layout_flotante,viewGroup,false);
         GridView galerias = (GridView) view.findViewById(R.id.galeria);
-        galerias.setAdapter(new galeria_adaptador(getContext(),globales.id_imagen+1));
+        galerias.setAdapter(new galeria_adaptador(getContext()));
         titulo=(TextView)view.findViewById(R.id.titulo);
         descripcion=(TextView)view.findViewById(R.id.descripcion);
         titulo.setText(string_titulo);
@@ -49,7 +49,7 @@ public class bottonflotante extends BottomSheetDialogFragment {
     private void cargar(){
         db_timeLine db_timeLine=new db_timeLine(getContext(),1);
         db_items=db_timeLine.getWritableDatabase();
-        int id=globales.id_imagen+1;
+        int id=globales.id_imagen;
         Cursor items=db_items.rawQuery("select * from timeline where id="+id,null);
         if (items.moveToFirst()){
             string_titulo=items.getString(2);

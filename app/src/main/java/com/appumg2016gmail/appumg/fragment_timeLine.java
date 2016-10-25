@@ -23,14 +23,19 @@ public class fragment_timeLine extends Fragment {
         TimeLine = (ListView) view.findViewById(R.id.Ttimeline);
         TimeLine.setAdapter(new AdaptadorContentTimeLine(getActivity()));
         beahavior=(LinearLayout) view.findViewById(R.id.behavior);
+
         TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                globales.id_imagen=i+1;
                 bottonflotante bottonflotante=new bottonflotante();
                 bottonflotante.show(globales.manager,"botton shet");
-                globales.id_imagen=i;
+
             }
         });
+
+    //   bottonflotante bottonflotante=new bottonflotante();
+      // bottonflotante.show(globales.manager,"ejemplo");
         return  view;
     }
 }

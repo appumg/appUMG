@@ -9,124 +9,193 @@
     tools:context="com.appumg2016gmail.appumg.agregar_item_line"
     tools:showIn="@layout/activity_agregar_item_line"
     android:background="#ffffff"
-    android:orientation="vertical"
-    android:paddingTop="20dp">
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        >
+
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:id="@+id/imageButton2"
+            android:src="@drawable/ic_hecho"
+            android:onClick="guardar"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="#ffffff"
+            />
+
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_cancelar"
+            android:id="@+id/imageButton3"
+            android:background="#ffffff"
+            style="@style/Widget.AppCompat.ImageButton"
+            android:onClick="cancelar"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:text="Agrega un Evento"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageButton2"
+            android:id="@+id/textView2"
+            android:layout_alignParentBottom="true"
+            android:layout_toEndOf="@+id/imageButton3"
+            android:textStyle="italic"
+            android:gravity="center" />
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#939393"
+        ></LinearLayout>
     <android.support.design.widget.TextInputLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/titulo"
-        android:padding="5dp"
-        android:hint="Titulo del Evento"
-        android:textSize="30dp"
-
-        style="@style/bordestitulo" />
-    </android.support.design.widget.TextInputLayout>
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="60dp">
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:id="@+id/publico"
-        android:layout_toEndOf="@+id/tipo_evento"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:dropDownSelector="?android:attr/actionModeCloseDrawable" />
-
-    <Spinner
-        android:layout_width="136dp"
-        android:layout_height="64dp"
-        android:id="@+id/tipo_evento"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
- />
-
-</RelativeLayout>
-
-
-    <android.support.design.widget.TextInputLayout
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    >
-
-    </android.support.design.widget.TextInputLayout>
-
-<android.support.design.widget.TextInputLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_date"
-            android:id="@+id/botonCalendario"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/fecha"
-            android:layout_marginStart="44dp"
-            android:onClick="calendario"
-            />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_hora"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/botonCalendario"
-            android:id="@+id/imageButton4"
-            android:onClick="hora"
-            />
-
-        <TextView
-            android:layout_width="200dp"
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
+            android:text=""
             android:ems="10"
-            android:textSize="25dp"
-            android:id="@+id/fecha"
-            android:hint="Dia y Hora"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="8dp"
-            android:id="@+id/fechas"
-            android:layout_below="@+id/fecha"
-            android:layout_alignParentStart="true" />
-    </RelativeLayout>
-</android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-    android:layout_width="match_parent"
-    android:layout_height="143dp" >
-    <EditText
+            android:id="@+id/titulo"
+            android:padding="5dp"
+            android:hint="Titulo del Evento"
+            android:textSize="30dp"
+
+            style="@style/bordestitulo" />
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999797"
+        ></LinearLayout>
+    <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_height="60dp">
+
+        <Spinner
+            android:layout_width="136dp"
+            android:layout_height="64dp"
+            android:id="@+id/tipo_evento"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:spinnerMode="dialog" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:id="@+id/publico"
+            style="@style/Widget.AppCompat.TextView.SpinnerItem"
+            android:dropDownSelector="?android:attr/actionModeCloseDrawable"
+            android:spinnerMode="dialog"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/tipo_evento" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#9e9e9e"
+        ></LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:ems="20"
-        android:hint="descripcion del evento"
-        android:id="@+id/descripcion"
-        style="@style/bordes"
-        android:elevation="2dp"
-        android:lines="5"
-        android:layout_marginLeft="60dp" />
+        android:layout_width="match_parent"
+        >
 
-</android.support.design.widget.TextInputLayout>
-
+    </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-            android:layout_height="64dp">
+        android:layout_height="wrap_content"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_date"
+                android:id="@+id/botonCalendario"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/fecha"
+                android:layout_marginStart="44dp"
+                android:onClick="calendario"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_hora"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/botonCalendario"
+                android:id="@+id/imageButton4"
+                android:onClick="hora"
+                />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:textSize="25dp"
+                android:id="@+id/fecha"
+                android:hint="Dia y Hora"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:id="@+id/fechas"
+                android:layout_below="@+id/fecha"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#b1b1b1"
+            ></LinearLayout>
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#9f9f9f"
+        ></LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="143dp" >
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:ems="20"
+            android:hint="descripcion del evento"
+            android:id="@+id/descripcion"
+            style="@style/bordestitulo"
+            android:lines="5" />
+
+    </android.support.design.widget.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#8b8b8b"
+        ></LinearLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -147,7 +216,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000"
+        android:background="#7c7c7c"
         ></RelativeLayout>
 
     <EditText
@@ -161,34 +230,4 @@
         android:clickable="false"
         android:enabled="false" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        >
-
-        <ImageButton
-            android:layout_width="150dp"
-            android:layout_height="80dp"
-            android:id="@+id/imageButton2"
-            android:src="@drawable/ic_hecho"
-            android:onClick="guardar"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:background="#ffffff"
-            />
-
-        <ImageButton
-            android:layout_width="150dp"
-            android:layout_height="70dp"
-            android:src="@drawable/ic_cancelar"
-            android:id="@+id/imageButton3"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:background="#ffffff"
-            style="@style/Widget.AppCompat.ImageButton"
-            android:onClick="cancelar"
-            />
-    </RelativeLayout>
 </LinearLayout>

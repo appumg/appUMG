@@ -1,13 +1,16 @@
 package com.appumg2016gmail.appumg;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -31,32 +34,44 @@ import java.util.ArrayList;
 public class time_line extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ListView TimeLine;
-    private String[] contenido = new String[]{"contendio", "conteido"};
     private ArrayAdapter<String> adaptador;
     private AdaptadorContentTimeLine adaptadorContentTimeLine;
     private LinearLayout beahavior;
     private GridView galeria;
     private ArrayList<Integer> id_items=new ArrayList<>();
+    private SwipeRefreshLayout refrescar;
 
     private ArrayList<Uri> imagenes=new ArrayList<>();
 ///----- creamos objetos de la base de datos y de la clase que crea la base de datos
     private SQLiteDatabase itemsConenedor;
     private db_itemsTimeLine db_itemsTimeLine;
     private int version=1;
+    private int id=2131493068;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        onNavigationItemSelected(null);
+        globales.manager=getSupportFragmentManager();
         galeria=(GridView) findViewById(R.id.galeria);
-
+        refrescar=(SwipeRefreshLayout)findViewById(R.id.swipe);
+        refrescar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                boolean estado=onNavigationItemSelected(null);
+                if (estado){
+                    refrescar.setRefreshing(false);
+                }
+            }
+        });
 /// ---- cargando las bases de datos
 
 
 
 
-        galeria.setAdapter(new galeria_adaptador(this,imagenes));
+        galeria.setAdapter(new galeria_adaptador(this));
 
 
         beahavior=(LinearLayout) findViewById(R.id.behavior);
@@ -76,8 +91,8 @@ public class time_line extends AppCompatActivity
         TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(time_line.this, "pulsaste " + i, Toast.LENGTH_SHORT).show();
-                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+              globales.id_imagen=i+1;
+             //   bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
@@ -90,8 +105,29 @@ public class time_line extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
+      navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+          @Override
+          public boolean onNavigationItemSelected(MenuItem item) {
+               id = item.getItemId();
+              if (id == R.id.nav_timeLine) {
+                  Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
+              } else if (id == R.id.nav_gallery) {
+
+              } else if (id == R.id.nav_slideshow) {
+
+              } else if (id == R.id.menu_sobreUMG) {
+
+
+              } else if (id == R.id.nav_share) {
+
+              } else if (id == R.id.nav_send) {
+
+              }
+              DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+              drawer.closeDrawer(GravityCompat.START);
+              return true;
+          }
+      });
 
     }
 
@@ -133,16 +169,19 @@ public class time_line extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        // int id = item.getItemId();
 
+        Fragment fragment=null;
+        boolean estado=false;
         if (id == R.id.nav_timeLine) {
-
+            fragment=new fragment_timeLine();
+            estado=true;
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.menu_sobreUMG) {
-            Intent i=new Intent(this, info_u.class);
+            Intent i=new Intent(time_line.this, info_u.class);
             startActivity(i);
 
         } else if (id == R.id.nav_share) {
@@ -150,11 +189,14 @@ public class time_line extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         }
-
+        if(estado){
+            getFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     public void evento(View view) {
         Intent llamada = new Intent(time_line.this, agregar_item_line.class);
