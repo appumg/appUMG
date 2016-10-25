@@ -108,19 +108,6 @@ private ImageButton agregar;
         tipo_evento.setAdapter(opcion);
         publics.setAdapter(public_opciones);
 
-//--------------- agregando efectos a cuadro descripcion del evento
-        descripcion.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    v.setBackgroundResource(R.drawable.bordes);
-                    Toast.makeText(agregar_item_line.this, "valor de array"+ListaImagenes.size(), Toast.LENGTH_SHORT).show();
-                }else{
-                    v.setBackgroundResource(R.drawable.perdio_focus_borde);
-                }
-            }
-        });
-
 
 //------------------- obteniendo valores de los spinners
 
