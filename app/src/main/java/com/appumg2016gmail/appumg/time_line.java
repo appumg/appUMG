@@ -2,7 +2,6 @@ package com.appumg2016gmail.appumg;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
