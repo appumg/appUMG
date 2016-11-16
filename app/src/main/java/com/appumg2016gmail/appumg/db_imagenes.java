@@ -10,15 +10,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class db_imagenes extends SQLiteOpenHelper {
 
-    private static String nombre="imagen";
-    private String sql="create table "+nombre+"(id_pub integer,direccion text not null)";
+    public static db_imagenes llamada(Context context){
+        db_imagenes db_imagenes=null;
+        if (db_imagenes==null){
+            db_imagenes=new db_imagenes(context);
+        }
 
-    public db_imagenes(Context context,int version){
-        super(context,nombre,null,version);
+        return db_imagenes;
+    }
+
+
+
+    private db_imagenes(Context context){
+        super(context,Strings_db.string_db_imagenes.nombre,null,Strings_db.string_db_imagenes.version);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(sql);
+        db.execSQL(Strings_db.string_db_imagenes.creaDB);
     }
 
     @Override

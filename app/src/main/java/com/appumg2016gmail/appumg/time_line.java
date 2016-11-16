@@ -51,6 +51,7 @@ public class time_line extends AppCompatActivity
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //registerForContextMenu(getListView());
         onNavigationItemSelected(null);
         globales.manager=getSupportFragmentManager();
         galeria=(GridView) findViewById(R.id.galeria);
@@ -69,7 +70,7 @@ public class time_line extends AppCompatActivity
 
 
 
-        galeria.setAdapter(new galeria_adaptador(this));
+//        galeria.setAdapter(new galeria_adaptador(this));
 
 
         beahavior=(LinearLayout) findViewById(R.id.behavior);
@@ -140,7 +141,7 @@ public class time_line extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -148,7 +149,7 @@ public class time_line extends AppCompatActivity
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -162,7 +163,7 @@ public class time_line extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -203,9 +204,10 @@ public class time_line extends AppCompatActivity
     }
 
     public void noticia(View v) {
-        db_timeLine time = new db_timeLine(this, 1);
+        db_timeLine time =  db_timeLine.llamada(this);
         SQLiteDatabase db;
         db = time.getWritableDatabase();
+
         Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
     }
 

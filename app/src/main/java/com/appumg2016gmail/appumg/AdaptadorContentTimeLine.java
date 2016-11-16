@@ -3,7 +3,10 @@ package com.appumg2016gmail.appumg;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +28,7 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
     TextView  NombrePublicador;
     ImageView miniatura;
 // arreglos para contener la lista de los items a mostrar en la linea de tiempo.
+    private ArrayList<String> A_id=new ArrayList<>();
     private ArrayList<String> A_titulo=new ArrayList<>();
     private ArrayList<String> A_fechaEvento=new ArrayList<>();
     private ArrayList<String> A_fechaPublicacion=new ArrayList<>();
@@ -41,8 +45,8 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
 
     public AdaptadorContentTimeLine(Context activity){
         context=activity;
-        items=new db_timeLine(context.getApplicationContext(),version);
-        imagenes=new db_imagenes(context.getApplicationContext(),version);
+        items= db_timeLine.llamada(context.getApplicationContext());
+        imagenes= db_imagenes.llamada(context.getApplicationContext());
         db_items=items.getWritableDatabase();
         db_imagen=imagenes.getWritableDatabase();
 
@@ -51,7 +55,7 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return A_administrador.size();
+        return A_titulo.size();
     }
 
     @Override
@@ -80,8 +84,12 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
             fechaPublicacion.setText(A_fechaPublicacion.get(i));
             fechaEvento.setText(A_fechaEvento.get(i));
             NombrePublicador.setText(A_administrador.get(i));
-            miniatura.setImageURI(A_imagen.get(i));
-
+            if (A_imagen.size()!=0) {
+                ///convertir el string en imagen
+                if (i<A_imagen.size()) {
+                    miniatura.setImageURI(A_imagen.get(i));
+                }
+            }
 
         return view1;
     }
@@ -90,17 +98,19 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
 
 
     public void obtenerDatos(){
-               Cursor Cursor_items= db_items.rawQuery("select * from timeline",null);
+               Cursor Cursor_items= db_items.rawQuery("select * from "+Strings_db.string_db_timeline.nombre+" ORDER BY "+Strings_db.string_db_timeline.numero+" ASC",null);
             if (Cursor_items.moveToFirst()){
 
                 do {
-                    globales.id_imagenes.add(Cursor_items.getInt(0));
+                    globales.id_item.add(Cursor_items.getInt(0));
                     A_titulo.add(Cursor_items.getString(2));
-                    A_administrador.add("publicado por:"+Cursor_items.getString(8));
-                    A_fechaEvento.add("fecha del evento: "+Cursor_items.getString(6)+" a las "+Cursor_items.getString(7));
-                    A_fechaPublicacion.add("publicado el : "+Cursor_items.getString(4)+" a las "+Cursor_items.getString(5));
+                    A_administrador.add("publicado por:"+Cursor_items.getString(6));
+                    A_fechaEvento.add("fecha del evento: "+Cursor_items.getString(5));
+                    A_fechaPublicacion.add("publicado el : "+Cursor_items.getString(4));
                     String ids=Cursor_items.getString(0);
-                    Cursor cursor_imagenes= db_imagen.rawQuery("select direccion from imagen where id_pub="+ids,null);
+                    Cursor cursor_imagenes= db_imagen.rawQuery("select "+Strings_db.string_db_imagenes.direccion+" from "+
+                            Strings_db.string_db_imagenes.nombre+" where "+Strings_db.string_db_imagenes.id_imagen+"="+ids,null);
+
                     if (cursor_imagenes.moveToFirst()) {
                                 String img = cursor_imagenes.getString(0);
                                 Uri imag = Uri.parse(img);
@@ -109,5 +119,8 @@ public class AdaptadorContentTimeLine extends BaseAdapter {
                 }while(Cursor_items.moveToNext());
             }
         }
+
+
+
 
 }
