@@ -2,25 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.appumg2016gmail.appumg.centros_u_IngenieriaSistemas">
+    tools:context="com.appumg2016gmail.appumg.pensumCarrera_administracionEmpresas">
 
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="121dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Facultado Ingenieria "/>
-
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-
-        />
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lista_pensum_AdministracionEmpresas"/>
     </RelativeLayout>
 
 </FrameLayout>

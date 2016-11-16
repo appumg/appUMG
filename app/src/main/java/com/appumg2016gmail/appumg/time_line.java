@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -51,7 +52,6 @@ public class time_line extends AppCompatActivity
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //registerForContextMenu(getListView());
         onNavigationItemSelected(null);
         globales.manager=getSupportFragmentManager();
         galeria=(GridView) findViewById(R.id.galeria);
@@ -70,7 +70,7 @@ public class time_line extends AppCompatActivity
 
 
 
-//        galeria.setAdapter(new galeria_adaptador(this));
+        galeria.setAdapter(new galeria_adaptador(this));
 
 
         beahavior=(LinearLayout) findViewById(R.id.behavior);
@@ -112,9 +112,19 @@ public class time_line extends AppCompatActivity
                   Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
               } else if (id == R.id.nav_gallery) {
 
+
+
+
+                  Intent i=new Intent(time_line.this, carrerasU.class);
+                  startActivity(i);
+
               } else if (id == R.id.nav_slideshow) {
 
+
               } else if (id == R.id.menu_sobreUMG) {
+
+                  Intent i=new Intent(time_line.this, info_u.class);
+                  startActivity(i);
 
 
               } else if (id == R.id.nav_share) {
@@ -122,7 +132,8 @@ public class time_line extends AppCompatActivity
               } else if (id == R.id.nav_send) {
 
               }
-              DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+                  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
               drawer.closeDrawer(GravityCompat.START);
               return true;
           }
@@ -141,7 +152,7 @@ public class time_line extends AppCompatActivity
             super.onBackPressed();
         }
     }
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -149,7 +160,7 @@ public class time_line extends AppCompatActivity
         return true;
     }
 
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -163,7 +174,7 @@ public class time_line extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-*/
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -180,8 +191,6 @@ public class time_line extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.menu_sobreUMG) {
-            Intent i=new Intent(time_line.this, info_u.class);
-            startActivity(i);
 
         } else if (id == R.id.nav_share) {
 
@@ -204,10 +213,9 @@ public class time_line extends AppCompatActivity
     }
 
     public void noticia(View v) {
-        db_timeLine time =  db_timeLine.llamada(this);
+        db_timeLine time = new db_timeLine(this, 1);
         SQLiteDatabase db;
         db = time.getWritableDatabase();
-
         Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
     }
 

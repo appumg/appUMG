@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.appumg2016gmail.appumg.horario_contaduriaYauditoria">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+
+        android:id="@+id/layout_contenedor"
+        android:paddingTop="121dp">
+        <ExpandableListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ListaExpansible_horarioAuditoria"
+            android:divider="#33ccff"
+            android:dividerHeight="0.25dp"
+            />
+    </RelativeLayout>
+
+
+</FrameLayout>

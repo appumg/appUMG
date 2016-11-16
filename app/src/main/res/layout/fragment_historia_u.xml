@@ -5,37 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.appumg2016gmail.appumg.historia_u">
-
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         app:srcCompat="@drawable/umg_logo"
-        android:layout_marginTop="92dp"
-        android:id="@+id/imageView2"
+        android:id="@+id/IV_logoHistoria"
+        android:scaleType="centerCrop"
+
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="113dp" />
 
     <TextView
-        android:paddingLeft="@dimen/fab_margin"
-        android:paddingRight="@dimen/fab_margin"
-        android:layout_width="500dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|right"
-        android:text="HISTORIA"
-        android:id="@+id/T_historia"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="13dp" />
+        android:text="Historia en construcion......."
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_weight="1"
+        android:layout_below="@+id/IV_logoHistoria"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:id="@+id/TV_historia"/>
     </RelativeLayout>
     </ScrollView>
 

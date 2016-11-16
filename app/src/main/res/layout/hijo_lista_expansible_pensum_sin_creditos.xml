@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="4"
+    android:rowCount="1">
+
+    <TextView
+        android:id="@+id/a"
+        android:layout_width="30dp"
+
+        />
+
+    <TextView
+
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:text="169000 "
+        android:id="@+id/TV_CodCurso_SC"
+        android:textSize="12dp"
+        android:paddingEnd="10dp"/>
+
+    <TextView
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text=" Seminarios de Tecnologias de Informacion"
+        android:id="@+id/TV_curso_SC"
+        android:textSize="12dp"
+        android:paddingEnd="10dp"/>
+
+
+
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:text="169000"
+        android:id="@+id/TV_requisitos_SC"
+        android:textSize="11dp"
+        android:paddingEnd="10dp"/>
+
+
+
+</GridLayout>

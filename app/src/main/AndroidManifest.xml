@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CAMERA" /> <!-- Acceso a la camara -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Acceso a Escribir en memoria -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <!-- Acceso leer en memoria -->
     <application
         android:allowBackup="true"
@@ -40,10 +41,11 @@
             android:name=".time_line"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <service
-            android:name=".notificaciones"
-            android:enabled="true"
-            android:exported="true"></service>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDJtWaWTkWGKm-NphvsKVfqFciqtUAPZnU" />
+
+        <activity android:name=".carrerasU"></activity>
     </application>
 
 </manifest>

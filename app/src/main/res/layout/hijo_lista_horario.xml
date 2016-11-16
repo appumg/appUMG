@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Curso"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textColor="#404040"
+        android:id="@+id/TV_HijoLista"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Horario"
+        android:paddingLeft="60dp"
+        android:textColor="#999999"
+        android:id="@+id/TV_Horario"
+        android:paddingBottom="1dp"
+        android:paddingTop="1dp"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Catedratico"
+        android:paddingLeft="60dp"
+        android:textColor="#999999"
+        android:id="@+id/TV_Catedratico"
+        android:paddingBottom="1dp"
+        android:paddingTop="1dp"
+        />
+
+
+</LinearLayout>
