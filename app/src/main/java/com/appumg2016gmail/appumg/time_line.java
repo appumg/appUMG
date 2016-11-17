@@ -108,6 +108,7 @@ public class time_line extends AppCompatActivity
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 id = item.getItemId();
+                onNavigationItemSelected(null);
                 if (id == R.id.nav_timeLine) {
                     Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_gallery) {
