@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.appumg2016gmail.appumg.imagen_inicio"
-    android:elevation="1dp">
+    android:elevation="1dp"
+    android:background="#ffffff"
+    >
     <!--android:background="@mipmap/paje" -->
 
 
