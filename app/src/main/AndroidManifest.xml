@@ -10,7 +10,7 @@
     <!-- Acceso leer en memoria -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/umg"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -46,6 +46,10 @@
             android:value="AIzaSyDJtWaWTkWGKm-NphvsKVfqFciqtUAPZnU" />
 
         <activity android:name=".carrerasU"></activity>
+        <service
+            android:name=".notificaciones"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

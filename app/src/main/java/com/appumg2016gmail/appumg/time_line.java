@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -41,7 +40,7 @@ public class time_line extends AppCompatActivity
     private SwipeRefreshLayout refrescar;
 
     private ArrayList<Uri> imagenes=new ArrayList<>();
-///----- creamos objetos de la base de datos y de la clase que crea la base de datos
+    ///----- creamos objetos de la base de datos y de la clase que crea la base de datos
     private SQLiteDatabase itemsConenedor;
     private db_itemsTimeLine db_itemsTimeLine;
     private int version=1;
@@ -52,6 +51,7 @@ public class time_line extends AppCompatActivity
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //registerForContextMenu(getListView());
         onNavigationItemSelected(null);
         globales.manager=getSupportFragmentManager();
         galeria=(GridView) findViewById(R.id.galeria);
@@ -70,13 +70,13 @@ public class time_line extends AppCompatActivity
 
 
 
-        galeria.setAdapter(new galeria_adaptador(this));
+//        galeria.setAdapter(new galeria_adaptador(this));
 
 
         beahavior=(LinearLayout) findViewById(R.id.behavior);
         final BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from(beahavior);
 
-       // ArrayList<Uri> imagenes=new ArrayList<Uri>(){};
+        // ArrayList<Uri> imagenes=new ArrayList<Uri>(){};
 
         // asignnando el adaptador al listview principal
         TimeLine = (ListView) findViewById(R.id.Ttimeline);
@@ -90,8 +90,8 @@ public class time_line extends AppCompatActivity
         TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-              globales.id_imagen=i+1;
-             //   bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                globales.id_imagen=i+1;
+                //   bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
 
@@ -104,40 +104,29 @@ public class time_line extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-      navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-          @Override
-          public boolean onNavigationItemSelected(MenuItem item) {
-               id = item.getItemId();
-              if (id == R.id.nav_timeLine) {
-                  Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
-              } else if (id == R.id.nav_gallery) {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                id = item.getItemId();
+                if (id == R.id.nav_timeLine) {
+                    Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
+                } else if (id == R.id.nav_gallery) {
+
+                } else if (id == R.id.nav_slideshow) {
+
+                } else if (id == R.id.menu_sobreUMG) {
 
 
+                } else if (id == R.id.nav_share) {
 
+                } else if (id == R.id.nav_send) {
 
-                  Intent i=new Intent(time_line.this, carrerasU.class);
-                  startActivity(i);
-
-              } else if (id == R.id.nav_slideshow) {
-
-
-              } else if (id == R.id.menu_sobreUMG) {
-
-                  Intent i=new Intent(time_line.this, info_u.class);
-                  startActivity(i);
-
-
-              } else if (id == R.id.nav_share) {
-
-              } else if (id == R.id.nav_send) {
-
-              }
-
-                  DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-              drawer.closeDrawer(GravityCompat.START);
-              return true;
-          }
-      });
+                }
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
 
     }
 
@@ -152,29 +141,29 @@ public class time_line extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.time_line, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+    /*
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            getMenuInflater().inflate(R.menu.time_line, menu);
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
-    }
+        /*@Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
+            int id = item.getItemId();
 
+            //noinspection SimplifiableIfStatement
+            if (id == R.id.action_settings) {
+                return true;
+            }
+
+            return super.onOptionsItemSelected(item);
+        }
+    */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -191,6 +180,8 @@ public class time_line extends AppCompatActivity
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.menu_sobreUMG) {
+            Intent i=new Intent(time_line.this, info_u.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_share) {
 
@@ -213,9 +204,10 @@ public class time_line extends AppCompatActivity
     }
 
     public void noticia(View v) {
-        db_timeLine time = new db_timeLine(this, 1);
+        db_timeLine time =  db_timeLine.llamada(this);
         SQLiteDatabase db;
         db = time.getWritableDatabase();
+
         Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
     }
 

@@ -34,6 +34,9 @@ public class globales {
     public globales (int i){
         System.out.println("la clase de inicio del servicio--");
         context.startService(new Intent(context,notificaciones.class));
+        if (context==null){
+            System.out.println("el contexto esta null");
+        }
     }
 
     // variables que guardaran los datos que se estan subiendo online

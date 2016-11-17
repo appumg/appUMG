@@ -365,7 +365,6 @@ public class guardar_online extends AsyncTask<String,Void , String> {
                                 System.out.println(devuelve + " datos devueltos");
                                 byte[] cadenas = Base64.decode(data, Base64.DEFAULT);
                                 foto = BitmapFactory.decodeByteArray(cadenas, 0, cadenas.length);
-                                globales.ListaImagenes.add(foto);
                                 String direccionReal = guardarImagen(globales.context, "img-" + ids + i, foto);
                                 System.out.println(direccionReal);
                                 db_imagenesconexion.execSQL("insert into " + Strings_db.string_db_imagenes.nombre + "(" +

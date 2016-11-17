@@ -21,12 +21,13 @@ public class imagen_inicio extends AppCompatActivity {
             public void run() {
 
                 try {
-
+                    new globales(1);
                     sleep(2000);
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-                    globales globales=new globales(1);
+
                     Intent pantallaprincipal = new Intent(imagen_inicio.this, time_line.class);
                     startActivity(pantallaprincipal);
                     finish();

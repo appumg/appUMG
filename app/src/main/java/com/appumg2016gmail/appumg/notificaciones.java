@@ -36,20 +36,17 @@ public class notificaciones extends IntentService {
         super("WorkingIntentService");
     }
 
-   @Override
-   public void onCreate(){
-       super.onCreate();
-       Toast.makeText(this, "El servicio se a creado", Toast.LENGTH_SHORT).show();
-       notifacciones=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-   }
+    @Override
+    public void onCreate(){
+        super.onCreate();
+        Toast.makeText(this, "El servicio se a creado", Toast.LENGTH_SHORT).show();
+        notifacciones=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+    }
 
     @Override
     public void onDestroy(){
 
     }
-
-
-
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -78,70 +75,70 @@ public class notificaciones extends IntentService {
         String cadena= OBTENER;
         URL url=null;
         String devuelve="";
-                try {
-                    System.out.println("entro a asynctask items");
-                    HttpURLConnection urlConn;
-                    url = new URL(cadena);
-                    urlConn = (HttpURLConnection) url.openConnection();
-                    urlConn.setDoInput(true);
-                    urlConn.setDoOutput(true);
-                    urlConn.setUseCaches(false);
-                    urlConn.setRequestProperty("Content-Type", "application/json");
-                    urlConn.setRequestProperty("Accept", "application/json");
-                    urlConn.connect();
-                    //Creo el Objeto JSON
-                    JSONObject jsonParam=new JSONObject();
-                    Cursor cursor=db_timeline.rawQuery(" select max("+Strings_db.string_db_timeline.numero+") as "+Strings_db.string_db_timeline.numero+","+Strings_db.string_db_timeline.id+" from "+Strings_db.string_db_timeline.nombre+" ",null);
-                    if (cursor.moveToFirst()) {
-                        if ( cursor.getString(1)==null){
-                            jsonParam.put("id_itemActual","0");
-                        }else {
-                            jsonParam.put("id_itemActual", cursor.getString(1));
-                            System.out.println(cursor.getString(1) + "---");
-                        }
-                    }
-                    // Envio los parámetros post.
-                    OutputStream os = urlConn.getOutputStream();
-                    BufferedWriter writer = new BufferedWriter(
-                            new OutputStreamWriter(os, "UTF-8"));
-                    writer.write(jsonParam.toString());
-                    writer.flush();
-                    writer.close();
-                    int respuesta = urlConn.getResponseCode();
-                    StringBuilder result = new StringBuilder();
-                    if (respuesta == HttpURLConnection.HTTP_OK) {
-                        String line;
-                        BufferedReader br=new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-                        while ((line=br.readLine()) != null) {
-                            result.append(line);
-                            //response+=line;
-                        }
-                        //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
-                        JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
-                        //Accedemos al vector de resultados
-
-                        String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
-                        if (resultJSON == "1") {      // hay un alumno que mostrar
-                            notificacion(1,R.drawable.ic_umg,"Universidad Mariano Gálvez","Se publico un nuevo Evento!");
-                            System.out.println("Se a publicado un nuevo evento! ");
-                            new globales();
-                        } else if (resultJSON == "2") {
-                            devuelve = "No hay evento nuevos";
-                            System.out.println(devuelve);
-                        }
-                    }
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        try {
+            System.out.println("entro a asynctask items");
+            HttpURLConnection urlConn;
+            url = new URL(cadena);
+            urlConn = (HttpURLConnection) url.openConnection();
+            urlConn.setDoInput(true);
+            urlConn.setDoOutput(true);
+            urlConn.setUseCaches(false);
+            urlConn.setRequestProperty("Content-Type", "application/json");
+            urlConn.setRequestProperty("Accept", "application/json");
+            urlConn.connect();
+            //Creo el Objeto JSON
+            JSONObject jsonParam=new JSONObject();
+            Cursor cursor=db_timeline.rawQuery(" select max("+Strings_db.string_db_timeline.numero+") as "+Strings_db.string_db_timeline.numero+","+Strings_db.string_db_timeline.id+" from "+Strings_db.string_db_timeline.nombre+" ",null);
+            if (cursor.moveToFirst()) {
+                if ( cursor.getString(1)==null){
+                    jsonParam.put("id_itemActual","0");
+                }else {
+                    jsonParam.put("id_itemActual", cursor.getString(1));
+                    System.out.println(cursor.getString(1) + "---");
                 }
+            }
+            // Envio los parámetros post.
+            OutputStream os = urlConn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(
+                    new OutputStreamWriter(os, "UTF-8"));
+            writer.write(jsonParam.toString());
+            writer.flush();
+            writer.close();
+            int respuesta = urlConn.getResponseCode();
+            StringBuilder result = new StringBuilder();
+            if (respuesta == HttpURLConnection.HTTP_OK) {
+                String line;
+                BufferedReader br=new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                while ((line=br.readLine()) != null) {
+                    result.append(line);
+                    //response+=line;
+                }
+                //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                //Accedemos al vector de resultados
 
-
-
-
+                String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+                if (resultJSON == "1") {      // hay un alumno que mostrar
+                    notificacion(1,R.drawable.ic_umg,"Universidad Mariano Gálvez","Se publico un nuevo Evento!");
+                    System.out.println("Se a publicado un nuevo evento! ");
+                    new globales();
+                } else if (resultJSON == "2") {
+                    devuelve = "No hay evento nuevos";
+                    System.out.println(devuelve);
+                }
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+
+
+
+
+    }
 
     public void notificacion(int id, int icoId,String titulo,String contenido){
         NotificationCompat.Builder builder=new NotificationCompat.Builder(globales.context).setSmallIcon(icoId)
@@ -151,13 +148,10 @@ public class notificaciones extends IntentService {
                 .setContentText(contenido)
                 .setColor(getResources().getColor(R.color.colorPrimaryDark));
 
-            notifacciones.notify(id,builder.build());
+        notifacciones.notify(id,builder.build());
     }
 
 
-    }
-
-
-
+}
 
 
