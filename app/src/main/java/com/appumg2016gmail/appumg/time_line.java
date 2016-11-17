@@ -111,8 +111,7 @@ public class time_line extends AppCompatActivity
 
 
 
-                  Intent i=new Intent(time_line.this, carrerasU.class);
-                  startActivity(i);
+
 
               } else if (id == R.id.nav_slideshow) {
 
@@ -185,7 +184,8 @@ public class time_line extends AppCompatActivity
             fragment=new fragment_timeLine();
             estado=true;
         } else if (id == R.id.nav_gallery) {
-
+            Intent i=new Intent(time_line.this, carrerasU.class);
+            startActivity(i);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.menu_sobreUMG) {
