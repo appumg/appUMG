@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -40,18 +41,17 @@ public class time_line extends AppCompatActivity
     private SwipeRefreshLayout refrescar;
 
     private ArrayList<Uri> imagenes=new ArrayList<>();
-    ///----- creamos objetos de la base de datos y de la clase que crea la base de datos
+///----- creamos objetos de la base de datos y de la clase que crea la base de datos
     private SQLiteDatabase itemsConenedor;
     private db_itemsTimeLine db_itemsTimeLine;
     private int version=1;
-    private int id=2131493068;
+    private int id=R.id.nav_timeLine;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //registerForContextMenu(getListView());
         onNavigationItemSelected(null);
         globales.manager=getSupportFragmentManager();
         galeria=(GridView) findViewById(R.id.galeria);
@@ -79,22 +79,17 @@ public class time_line extends AppCompatActivity
         // ArrayList<Uri> imagenes=new ArrayList<Uri>(){};
 
         // asignnando el adaptador al listview principal
-        TimeLine = (ListView) findViewById(R.id.Ttimeline);
+      //  TimeLine = (ListView) findViewById(R.id.Ttimeline);
         //---- llamamos el metodo que cargar la linea de tiempo
-        cargar_items_a_la_linea();
-
-
-
-
         //se le agrega el evento on click para capturar las pulsaciones
-        TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      /*  TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 globales.id_imagen=i+1;
                 //   bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             }
         });
-
+*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -113,14 +108,24 @@ public class time_line extends AppCompatActivity
                     Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_gallery) {
 
-                } else if (id == R.id.nav_slideshow) {
-
-                } else if (id == R.id.menu_sobreUMG) {
 
 
-                } else if (id == R.id.nav_share) {
 
-                } else if (id == R.id.nav_send) {
+                  Intent i=new Intent(time_line.this, carrerasU.class);
+                  startActivity(i);
+
+              } else if (id == R.id.nav_slideshow) {
+
+
+              } else if (id == R.id.menu_sobreUMG) {
+
+                  Intent i=new Intent(time_line.this, info_u.class);
+                  startActivity(i);
+
+
+              } else if (id == R.id.nav_share) {
+
+              } else if (id == R.id.nav_send) {
 
                 }
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -164,7 +169,10 @@ public class time_line extends AppCompatActivity
 
             return super.onOptionsItemSelected(item);
         }
-    */
+
+        return super.onOptionsItemSelected(item);
+    }
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -205,19 +213,10 @@ public class time_line extends AppCompatActivity
     }
 
     public void noticia(View v) {
-        db_timeLine time =  db_timeLine.llamada(this);
-        SQLiteDatabase db;
-        db = time.getWritableDatabase();
 
         Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
     }
 
     ///------ metodo que se ejecuta para cargar los items que se muestran en la linea de tiempo
-    private void cargar_items_a_la_linea() {
 
-        adaptadorContentTimeLine = new AdaptadorContentTimeLine(this);
-
-        TimeLine.setAdapter(adaptadorContentTimeLine);
-
-    }
 }
