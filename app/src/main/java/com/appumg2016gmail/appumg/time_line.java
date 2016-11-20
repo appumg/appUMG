@@ -108,11 +108,6 @@ public class time_line extends AppCompatActivity
                     Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.nav_gallery) {
 
-
-
-
-
-
               } else if (id == R.id.nav_slideshow) {
 
 
