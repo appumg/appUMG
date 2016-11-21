@@ -19,6 +19,11 @@
             android:id="@+id/menu_sobreUMG"
             android:icon="@drawable/ic_menu_manage"
             android:title="sobre UMG" />
+
+        <item
+            android:id="@+id/InfoU"
+
+            android:title="Info U" />
     </group>
 
     <item android:title="Comunicacion">

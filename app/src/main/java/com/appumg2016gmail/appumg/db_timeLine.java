@@ -9,32 +9,26 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class db_timeLine extends SQLiteOpenHelper {
+    private static db_timeLine db_timeLines=null;
 
-    private static String  nombreDB="time_line";
-    private static int     version=1;
-    private static String SQL="create table timeline(" +
-            "id integer primary key autoincrement, " +
-            "tipo text," +
-            "titulo text, " +
-            "descripcion text, " +
-            "fecha_pub text," +
-            "hora_pub text, " +
-            "fecha_evento text," +
-            "hora_evento text, " +
-            "publicador text)";
+    public static db_timeLine llamada(Context context){
+        if (db_timeLines==null){
+            db_timeLines=new db_timeLine(context.getApplicationContext());
+        }
 
-
-    public db_timeLine(Context context, int ver){
-        super(context,nombreDB,null,version);
+        return db_timeLines;
+    }
+    private  db_timeLine(Context context){
+        super(context,Strings_db.string_db_timeline.nombre,null,Strings_db.string_db_timeline.version);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL);
+        db.execSQL(Strings_db.string_db_timeline.creaDB);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("crop if exists timeline ");
-        db.execSQL(SQL);
+        db.execSQL(Strings_db.string_db_timeline.creaDB);
     }
 }

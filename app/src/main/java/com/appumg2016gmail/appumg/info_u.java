@@ -30,15 +30,10 @@ public class info_u extends AppCompatActivity {
         viewPagerAdapter=new adaptador_viewPager(getSupportFragmentManager());//Instacia del adaptador de los fragments
         viewPagerAdapter.addFramnets(new historia_u(),"Historia UMG");//Agregamos framgens al adaptador
         viewPagerAdapter.addFramnets(new himno_u(),"Himno");
-        viewPagerAdapter.addFramnets(new centros_u(),"Centros UMG");
+        viewPagerAdapter.addFramnets(new centros_u_IngenieriaSistemas(),"Centros UMG");
 
         viewPager.setAdapter(viewPagerAdapter);//enviamos el adaptadora al visor de paginas
         TabLayout.setupWithViewPager(viewPager);//enviamos el visor de paginas al TabLayout
-
-
-
-
-
 
     }
 }

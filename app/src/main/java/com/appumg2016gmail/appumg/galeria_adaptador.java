@@ -24,8 +24,6 @@ public class galeria_adaptador extends BaseAdapter {
     ArrayList<Uri> lista=new ArrayList<>();
 
 
-    private int id=globales.id_imagen;
-
     ImageView imageView;
     public galeria_adaptador(Context contexto){
 
@@ -60,12 +58,15 @@ public class galeria_adaptador extends BaseAdapter {
         return view;
     }
 
+
+
+
     public void cargar(){
         SQLiteDatabase db;
 
-        db_imagenes db_imagenes=new db_imagenes(context,1);
-        db=db_imagenes.getWritableDatabase();
-        Cursor galeria=db.rawQuery("select  direccion from imagen where id_pub="+id,null);
+        db_imagenes db_imagen= db_imagenes.llamada(context);
+        db=db_imagen.getWritableDatabase();
+        Cursor galeria=db.rawQuery("select  "+Strings_db.string_db_imagenes.direccion+" from "+Strings_db.string_db_imagenes.nombre+" where "+Strings_db.string_db_imagenes.id_imagen+"="+globales.id_imagen,null);
         if (galeria.moveToFirst()){
             do{
                 lista.add(Uri.parse(galeria.getString(0)));

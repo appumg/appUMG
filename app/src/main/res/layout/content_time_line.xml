@@ -7,11 +7,18 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.appumg2016gmail.appumg.time_line"
-    tools:showIn="@layout/app_bar_time_line">
+    tools:showIn="@layout/app_bar_time_line"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ly_contenerdor">
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/Ttimeline"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -2,14 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appumg2016gmail.appumg">
 
-    <uses-permission android:name="android.permission.INTERNET"/><!--Acceso a internet-->
-    <uses-permission android:name="android.permission.CAMERA" /><!--Acceso a la camara-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!--Acceso a Escribir en memoria -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /><!--Acceso leer en memoria-->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- Acceso a internet -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- Acceso a la camara -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Acceso a Escribir en memoria -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- Acceso leer en memoria -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/umg"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -36,7 +37,19 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".info_u" />
-        <activity android:name=".time_line" android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".time_line"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDJtWaWTkWGKm-NphvsKVfqFciqtUAPZnU" />
+
+        <activity android:name=".carrerasU"></activity>
+        <service
+            android:name=".notificaciones"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
