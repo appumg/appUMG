@@ -18,13 +18,10 @@ public class Strings_db {
         public static String id_imagen="id_imagen";
         public static String direccion="direccion_de_laImagen";
         public static String numeroImagen="numero";
-        public static String creaDB="create table "+string_db_imagenes.nombre+"("+id_imagen+" integer,"+direccion+" text not null,"+numeroImagen+" integer primary key autoincrement)";
+        public static String creaDB="create table "+string_db_imagenes.nombre+"("+id_imagen+" integer,"+direccion+" text not null,"+numeroImagen+" integer )";
     }
-
-
     public static class string_db_timeline{
         public static int version=1;
-
         public static String nombre="timeline";
         public static String id="id_item";
         public static String tipo="tipo_publicacion";
@@ -37,7 +34,6 @@ public class Strings_db {
         public static String creaDB="create table "+nombre+"("+id+intTipe+tipo+intTipe+titulo+stringTipe+descripcion+stringTipe+fecha_publicacion+stringTipe+
                 fecha_evento+stringTipe+publicador+stringTipeFin+","+numero+" integer primary key autoincrement)";
     }
-
 
     public static class string_db_tipo_evento{
         public static int version=1;

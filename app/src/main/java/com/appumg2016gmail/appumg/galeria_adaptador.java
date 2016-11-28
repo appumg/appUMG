@@ -50,16 +50,13 @@ public class galeria_adaptador extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
         inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view =inflater.inflate(R.layout.galeria_adaptador,parent,false);
+        View view=convertView;
+           view = inflater.inflate(R.layout.galeria_adaptador, parent, false);
         imageView=(ImageView)view.findViewById(R.id.imagen_galeria);
         imageView.setImageURI(lista.get(position));
         return view;
     }
-
-
-
 
     public void cargar(){
         SQLiteDatabase db;

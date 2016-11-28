@@ -51,7 +51,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/agregarNoticia"
     app:fab_icon="@drawable/ic_add_alert_black_24dp"
-    app:fab_title="Agregar Noticia"
+    app:fab_title="Eliminar un evento"
     android:onClick="noticia"
     />
 

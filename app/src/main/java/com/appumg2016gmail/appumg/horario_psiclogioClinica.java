@@ -43,8 +43,6 @@ public class horario_psiclogioClinica extends Fragment {
         hora_curso=new ArrayList<>();
         hora_curso.add(new hora_hor("7:00 a 9:00","9:00 a 11:00","11:00 a 13:00","14:00 a 16:00","16:00 a 18:00"));
 
-
-
         List<List<String>> catedraticos = new ArrayList<List<String>>();
         catedraticos.add(new ArrayList<String>());
         catedraticos.get(0).add("Lic. Amilcar Calderon");
@@ -63,22 +61,22 @@ public class horario_psiclogioClinica extends Fragment {
         catedraticos.add(new ArrayList<String>());
         catedraticos.get(2).add("Lic. Donis Lobos");
         catedraticos.get(2).add("Dr. José Flores");
-        catedraticos.get(2).add("Lic. Ibdy Rodas");
+        catedraticos.get(2).add("Licda. Ibdy Rodas");
         catedraticos.get(2).add("Lic. Roberto Castellanos");
         catedraticos.get(2).add("--------------------");
 
         catedraticos.add(new ArrayList<String>());
         catedraticos.get(3).add("Lic. José Flores");
-        catedraticos.get(3).add("Lic. Jacqueline Camacho");
-        catedraticos.get(3).add("Lic. Candy Barrios");
-        catedraticos.get(3).add("Lic. Gladys Ovando");
-        catedraticos.get(3).add("Lic. Ibdy Rodas");
+        catedraticos.get(3).add("Licda. Jacqueline Camacho");
+        catedraticos.get(3).add("Licda. Candy Barrios");
+        catedraticos.get(3).add("Licda. Gladys Ovando");
+        catedraticos.get(3).add("Licda. Ibdy Rodas");
 
         catedraticos.add(new ArrayList<String>());
-        catedraticos.get(4).add("Lic. Gladys Ovando");
-        catedraticos.get(4).add("Lic. Candy Barrios");
-        catedraticos.get(4).add("Lic. Gladys Ovando");
-        catedraticos.get(4).add("Lic. Candy Barrios");
+        catedraticos.get(4).add("Licda. Gladys Ovando");
+        catedraticos.get(4).add("Licda. Candy Barrios");
+        catedraticos.get(4).add("Licda. Gladys Ovando");
+        catedraticos.get(4).add("Licda. Candy Barrios");
         catedraticos.get(4).add("--------------------");
 /*
         catedraticos.add(new ArrayList<String>());

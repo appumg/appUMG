@@ -16,7 +16,7 @@ public class datos_lista_horarioAdministracionEmpresas {
         Sem1.add("Lenguaje e Investigación");
         Sem1.add("Adminitración I");
         Sem1.add("Desarrollo Humano y Profecional");
-        Sem1.add("Filosofía Administrativa");
+        Sem1.add("Filosofía Administrdativa");
         Sem1.add("Derecho I");
 
         List<String>  Sem1A=new ArrayList<String>();;
@@ -102,8 +102,8 @@ public class datos_lista_horarioAdministracionEmpresas {
         horario_semestreDetalle.put("Primer Ciclo Seccion B", Sem1A);
         horario_semestreDetalle.put("Tecer CicloSemestre", Sem3);
         //  horario_semestreDetalle.put("Cuarto Semestre", Sem4);
-        horario_semestreDetalle.put("Septimo Ciclo", Sem5);
-        //    horario_semestreDetalle.put("Sexto Semestre", Sem6);
+        horario_semestreDetalle.put("Quinto Ciclo", Sem5);
+        horario_semestreDetalle.put("Septimo Semestre", Sem6);
         horario_semestreDetalle.put("Noveno Ciclo", Sem7);
 //        horario_semestreDetalle.put("Octavo Semestre", Sem8);
    //     horario_semestreDetalle.put("Noveno Semestre", Sem9);

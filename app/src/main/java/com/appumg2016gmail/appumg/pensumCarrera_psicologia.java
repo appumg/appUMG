@@ -260,6 +260,13 @@ public class pensumCarrera_psicologia extends Fragment {
 
         hora_curso.add(new horario_pensum(CodigoCurso9,requisitos9));
 
+        //DATA COORDINADOR
+        ArrayList<String>codCOrd=new ArrayList<>();
+        codCOrd.add("");
+        hora_curso.add(new horario_pensum(codCOrd,codCOrd,codCOrd));
+
+
+
 
         adaptador=new adapter_lista_pensum_SC(getContext(),horario_semestre,horario_lista,hora_curso);
         listaExpandible.setAdapter(adaptador);

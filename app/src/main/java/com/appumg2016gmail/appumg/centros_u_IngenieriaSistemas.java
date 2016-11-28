@@ -58,8 +58,8 @@ public class centros_u_IngenieriaSistemas extends Fragment {
                 googleMap = mMap;
 
                 // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+                LatLng sydney = new LatLng(16.9218326,-89.8983193);///Aqui pones las coordenadas
+                googleMap.addMarker(new MarkerOptions().position(sydney).title("Centro Universitario UMG").snippet("Zona 1, Flores Petén"));
 
                 // For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();

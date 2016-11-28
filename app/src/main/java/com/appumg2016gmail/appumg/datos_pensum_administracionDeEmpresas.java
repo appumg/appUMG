@@ -76,6 +76,11 @@ public class datos_pensum_administracionDeEmpresas {
         Sem8.add("Elaboracióny Evaluacion de Proyectos");
         Sem8.add("Administración Financiera");
 
+        List<String>  Cordinador=new ArrayList<String>();;
+        Cordinador.add("Licenciado Ramiro Meléndez Ordoñez");
+
+
+
         horario_semestreDetalle.put("Primer Semestre", Sem1);
         horario_semestreDetalle.put("Segundo Semestre", Sem2);
         horario_semestreDetalle.put("Tercer Semestre", Sem3);
@@ -84,6 +89,7 @@ public class datos_pensum_administracionDeEmpresas {
         horario_semestreDetalle.put("Sexto Semestre", Sem6);
         horario_semestreDetalle.put("Septimo Semestre", Sem7);
         horario_semestreDetalle.put("Octavo Semestre", Sem8);
+        horario_semestreDetalle.put("Coordinador", Cordinador);
 
         return horario_semestreDetalle;
 

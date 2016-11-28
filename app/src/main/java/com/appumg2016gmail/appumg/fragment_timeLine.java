@@ -1,12 +1,16 @@
 package com.appumg2016gmail.appumg;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -17,21 +21,28 @@ import android.widget.Toast;
  */
 
 public class fragment_timeLine extends Fragment {
-    private ListView TimeLine;
+    private static ListView TimeLine;
+    private static Context contexto;
     private LinearLayout beahavior;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle){
         View view;
         globales.context=getActivity();
+        contexto=getActivity();
         view=inflater.inflate(R.layout.content_time_line,viewGroup,false);
-        /*String IPs = "http://appumg.pe.hu/php";
-        final String OBTENERIMAGENES = IPs + "/obtener_imagenes.php";
-        guardar_online obtener=new guardar_online();
-        obtener.execute(OBTENERIMAGENES,"3"); */
         TimeLine = (ListView) view.findViewById(R.id.Ttimeline);
-        registerForContextMenu(TimeLine);
+        TimeLine.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                TimeLine.deferNotifyDataSetChanged();
+            }
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                TimeLine.deferNotifyDataSetChanged();
+            }
+        });
+        recargar();
 
-        TimeLine.setAdapter(new AdaptadorContentTimeLine(getActivity()));
         beahavior=(LinearLayout) view.findViewById(R.id.behavior);
         TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -43,16 +54,19 @@ public class fragment_timeLine extends Fragment {
 
             }
         });
-        /* String IP = "http://appumg.pe.hu/php";
-        final String OBTENERIMAGENES = IP + "/obtener_imagenes.php";
-        String OBTENERItem = IP + "/obtener_apartir.php";
-        guardar_online obtener = new guardar_online();
-        obtener.execute(OBTENERItem, "7");
-        guardar_online obtenerlos=new guardar_online();
-        obtenerlos.execute(OBTENERIMAGENES,"3");
-        */
-        //globales glo=new globales();
         return  view;
+    }
+
+    public static boolean recargar() {
+        TimeLine.setAdapter(new AdaptadorContentTimeLine(contexto));
+        Thread hilo= new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TimeLine.deferNotifyDataSetChanged();
+            }
+        });
+        hilo.start();
+        return true;
     }
 
     @Override

@@ -3,19 +3,20 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
-        applicationId "com.appumg2016gmail.appumg"
+        applicationId 'com.appumg2016gmail.facultad_ingenieria'
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1
         versionName "1.0"
+        versionCode 5
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 android { packagingOptions {
@@ -43,4 +44,7 @@ dependencies {
     compile files('libs/httpmime-4.3.jar')
     compile files('libs/apache-mime4j-core-0.7.2.jar')
     compile 'com.google.android.gms:play-services-maps:9.6.1'
+    compile 'joda-time:joda-time:2.9.4'
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
+    compile 'com.android.support:cardview-v7:21.0.+'
 }

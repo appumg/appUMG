@@ -94,6 +94,11 @@ public class datos_pensum_auditoria {
         Sem11.add("Seminario de Contabilidad");
         Sem11.add("Seminario de Auditoria");
 
+
+        List<String>  Cordinador=new ArrayList<String>();;
+        Cordinador.add("Licenciado Armando Muralles");
+
+
         horario_semestreDetalle.put("Primer Semestre", Sem1);
         horario_semestreDetalle.put("Segundo Semestre", Sem2);
         horario_semestreDetalle.put("Tercer Semestre", Sem3);
@@ -102,6 +107,11 @@ public class datos_pensum_auditoria {
         horario_semestreDetalle.put("Sexto Semestre", Sem6);
         horario_semestreDetalle.put("Septimo Semestre", Sem7);
         horario_semestreDetalle.put("Octavo Semestre", Sem8);
+        horario_semestreDetalle.put("Noveno Semestre", Sem9);
+        horario_semestreDetalle.put("Decimo Semestre", Sem10);
+        horario_semestreDetalle.put("Decimo Primer Semestre", Sem11);
+        horario_semestreDetalle.put("Coordinador", Cordinador);
+
 
         return horario_semestreDetalle;
 

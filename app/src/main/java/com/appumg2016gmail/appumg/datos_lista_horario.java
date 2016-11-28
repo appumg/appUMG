@@ -16,30 +16,30 @@ public class datos_lista_horario {
         List<String>  Sem1=new ArrayList<String>();
         Sem1.add("Desarrollo Humano y profecional");
         Sem1.add("Contabilidad I");
-        Sem1.add("Metodologia de la investigación");
-        Sem1.add("Introduccion A los sistemas de Computo");
-        Sem1.add("Logica de Sistemas");
+        Sem1.add("Introduccion a los sistemas de Computo");
+        Sem1.add("Metodología de la investigación");
+        Sem1.add("Lógica de Sistemas");
 
         List<String>  Sem1A=new ArrayList<String>();;
         Sem1A.add("Contabilidad I");
         Sem1A.add("Logica de Sistemas");
-        Sem1A.add("Metodologia de la investigación");
+        Sem1A.add("Metodología de la investigación");
         Sem1A.add("Introduccion A los sistemas de Computo");
-        Sem1A.add("Desarrollo Humano y profecional");
+        Sem1A.add("Desarrollo Humano y Profecional");
 
 
         List<String>  Sem3=new ArrayList<String>();;
-        Sem3.add("Fisica I");
-        Sem3.add("Calculo I");
+        Sem3.add("Física I");
+        Sem3.add("Cálculo I");
         Sem3.add("Programación I");
         Sem3.add("Proceso Administrativo");
         Sem3.add("Derecho Informático");
 
         List<String>  Sem5=new ArrayList<String>();;
-        Sem5.add("Estadistica II");
+        Sem5.add("Estadística II");
         Sem5.add("Programación III");
-        Sem5.add("Metodos Numericos");
-        Sem5.add("Electronica Analógica");
+        Sem5.add("Métodos Numericos");
+        Sem5.add("Electrónica Analógica");
         Sem5.add("Emprendedores de Negocio");
 /*
         List<String>  Sem5=new ArrayList<String>();;
@@ -89,7 +89,7 @@ public class datos_lista_horario {
         Sem11.add("Ingenieria de Proyectos");
         Sem11.add("Comunicaciones");
         Sem11.add("Ingeniería del Software");
-        Sem11.add("Legislación Laboral  y Mercantil");
+        Sem11.add("Legislación Laboral y Mercantil");
 /*
         List<String>  Sem12=new ArrayList<String>();;
         Sem12.add("Desarrollo Humano y profecional");

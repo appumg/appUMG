@@ -93,7 +93,7 @@ public class datos_pensum2014_sistemas {
         Sem10.add("Logica de Sistemas");
 
         List<String>  Cordinador=new ArrayList<String>();;
-        Cordinador.add("Ingeniero Remon Girard");
+        Cordinador.add("Ingeniero José Remon Girard López");
 
 
 

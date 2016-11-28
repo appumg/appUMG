@@ -8,6 +8,9 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -37,13 +40,28 @@ public class bottonflotante extends BottomSheetDialogFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle bundle){
         cargar();
+
         View view=inflater.inflate(R.layout.layout_flotante,viewGroup,false);
-        GridView galerias = (GridView) view.findViewById(R.id.galeria);
+        final GridView galerias = (GridView) view.findViewById(R.id.galeria);
         galerias.setAdapter(new galeria_adaptador(getContext()));
         galerias.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "seleccionaste la imagen "+position, Toast.LENGTH_SHORT).show();
+                Animation ampliar= AnimationUtils.loadAnimation(getContext(),R.anim.ampliar);
+                ampliar.reset();
+                galerias.startAnimation(ampliar);
+
+            }
+        });
+        galerias.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                galerias.deferNotifyDataSetChanged();
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                galerias.deferNotifyDataSetChanged();
             }
         });
         titulo=(TextView)view.findViewById(R.id.titulo);
@@ -60,7 +78,6 @@ public class bottonflotante extends BottomSheetDialogFragment {
         db_timeLine db_timeLines= db_timeLine.llamada(getContext());
         db_items=db_timeLines.getWritableDatabase();
         int id=globales.id_imagen;
-        Toast.makeText(getActivity(), "el array id imagenes contiene:"+globales.id_imagen, Toast.LENGTH_SHORT).show();
         Cursor items=db_items.rawQuery("select * from "+Strings_db.string_db_timeline.nombre+" where "+Strings_db.string_db_timeline.id+"="+globales.id_imagen,null);
         if (items.moveToFirst()){
             string_titulo=items.getString(2);

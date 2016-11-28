@@ -59,7 +59,7 @@ public class himno_u extends Fragment {
                 if (!wasRestored) {
                     player.setPlayerStyle(YouTubePlayer.PlayerStyle.DEFAULT);
                     player.loadVideo(id_video);
-                    player.play();
+                    player.pause();//dejamos en pausa el video, por defecto!!
                 }
             }
 

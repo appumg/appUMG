@@ -350,6 +350,11 @@ public class pensumCarrera_auditoria extends Fragment {
 
         hora_curso.add(new horario_pensum(CodigoCurso10,creditos10,requisitos10));
 
+        //DATA COORDINADOR
+        ArrayList<String>codCOrd=new ArrayList<>();
+        codCOrd.add("");
+        hora_curso.add(new horario_pensum(codCOrd,codCOrd,codCOrd));
+
 
 
         adaptador=new adapter_lista_pensum(getContext(),horario_semestre,horario_lista,hora_curso);
