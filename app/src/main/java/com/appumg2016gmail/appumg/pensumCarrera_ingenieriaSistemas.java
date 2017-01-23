@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,7 +33,7 @@ public class pensumCarrera_ingenieriaSistemas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_pensum_carreras, container, false);
+        View v=inflater.inflate(R.layout.fragment_pensum_ingenieria_sistemas2014, container, false);
 
         listaExpandible=(ExpandableListView)v.findViewById(R.id.lista_pensum);
         horario_semestre=datos_pensum2014_sistemas.getInformacion();

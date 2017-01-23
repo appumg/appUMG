@@ -83,6 +83,9 @@ public class datos_pensum_trabajoSocial {
         Sem10.add("Evaluación y Resolución de Conflictos");
         Sem10.add("Trabajo de Graduación II");
 
+        List<String>  Cordinador=new ArrayList<String>();;
+        Cordinador.add("Licenciada Ysolda Marilin López Canek\n");
+
         horario_semestreDetalle.put("Primer Semestre", Sem1);
         horario_semestreDetalle.put("Segundo Semestre", Sem2);
         horario_semestreDetalle.put("Tercer Semestre", Sem3);
@@ -93,6 +96,8 @@ public class datos_pensum_trabajoSocial {
         horario_semestreDetalle.put("Octavo Semestre", Sem8);
         horario_semestreDetalle.put("Noveno Semestre", Sem9);
         horario_semestreDetalle.put("Decimo Semestre", Sem10);
+        horario_semestreDetalle.put("Coordinadora", Cordinador);
+
 
         return horario_semestreDetalle;
 

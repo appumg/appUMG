@@ -1,5 +1,6 @@
 package com.appumg2016gmail.appumg;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.database.Cursor;
@@ -13,10 +14,10 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -30,11 +31,9 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 /**
  * Created by zombozo on 01/11/2016.
  */
-
 public class guardar_online extends AsyncTask<String,Void , String> {
     //----- objetos nesesario para la base de datos
     SQLiteDatabase db_timeline;
@@ -64,18 +63,8 @@ public class guardar_online extends AsyncTask<String,Void , String> {
         String devuelve="";
         if (params[1]=="1"){  // guardando los datos de un nuevo item
             try {
-                obtenerItemActual=true;
-                HttpURLConnection urlConn;
-                DataOutputStream printout;
-                DataInputStream input;
-                url = new URL(cadena);
-                urlConn = (HttpURLConnection) url.openConnection();
-                urlConn.setDoInput(true);
-                urlConn.setDoOutput(true);
-                urlConn.setUseCaches(false);
-                urlConn.setRequestProperty("Content-Type", "application/json");
-                urlConn.setRequestProperty("Accept", "application/json");
-                urlConn.connect();
+                System.out.println(params[6]+"  fechas  "+params[7]);
+                HttpURLConnection urlConn=conexion(cadena);
                 //Creo el Objeto JSON
                 JSONObject jsonParam=new JSONObject();
 
@@ -85,10 +74,7 @@ public class guardar_online extends AsyncTask<String,Void , String> {
                 jsonParam.put("descripcion",params[5]);
                 jsonParam.put("fecha_pub",params[6]);
                 jsonParam.put("fecha_evento",params[7]);
-                jsonParam.put("id_imagen",params[8]);  /*
-                JSONObject jsonParam = new JSONObject();
-                jsonParam.put("nombre", "gerson");
-                jsonParam.put("direccion", "olivares"); */
+                jsonParam.put("id_imagen",params[8]);
                 // Envio los parámetros post.
                 OutputStream os = urlConn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
@@ -111,26 +97,29 @@ public class guardar_online extends AsyncTask<String,Void , String> {
 
                     String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
                     if (resultJSON == "1") {      // hay un alumno que mostrar
-                        devuelve = "Alumno insertado correctamente";
+                        devuelve = "Imagen insertada correctamente";
+                        obtenerItemActual=true;
+                        globales.semaforo=true;
                        System.out.println(devuelve);
                     } else if (resultJSON == "2") {
-                        devuelve = "El alumno no pudo insertarse";
+                        globales.semaforo=true;
+                        devuelve = "La imagen no pudo insertarse";
                         System.out.println(devuelve);
                     }
                 }
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+               devuelve="A ocurrido un error intente nuevamente!";
             } catch (IOException e) {
-                e.printStackTrace();
+                devuelve="ERROR: el evento Pudo no haberse subido, se intentara en breve";
             } catch (JSONException e) {
-                e.printStackTrace();
+                devuelve="ERROR: no se pudo leer el valor del servidor";
+            }catch (Exception e){
+                devuelve="ERROR:"+e.getMessage();
             }
             return devuelve;
         }
-
-
              if(params[1]=="4"){    // Consulta la ultima id del item recien insertado
-            estadoParaGuardarImagenes=true;
+
             try {
                 url = new URL(cadena);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection(); //Abrir la conexión
@@ -154,10 +143,19 @@ public class guardar_online extends AsyncTask<String,Void , String> {
                     //Accedemos al vector de resultados
                     String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
                     if (resultJSON=="1"){      // hay alumnos a mostrar
-                        JSONArray alumnosJSON = respuestaJSON.getJSONArray("items");   // estado es el nombre del campo en el JSON
-                        for(int i=0;i<alumnosJSON.length();i++){
-                            globales.idItemActual=Integer.parseInt(alumnosJSON.getJSONObject(i).getString("id_item"));
-                            System.out.println(alumnosJSON.getJSONObject(i).getString("id_item")+" esta es la item obtenida!! ----------------");
+                        JSONArray itemsJSON = respuestaJSON.getJSONArray("items");   // estado es el nombre del campo en el JSON
+                        for(int i=0;i<itemsJSON.length();i++){
+                            globales.idItemActual=Integer.parseInt(itemsJSON.getJSONObject(i).getString("id_item"));
+                            System.out.println(globales.idItemActual+" esta es la item obtenida!! ----------------");
+                            estadoParaGuardarImagenes=true;
+                            temporal_imagenes temporal=temporal_imagenes.llamada(globales.context);
+                            SQLiteDatabase db=temporal.getWritableDatabase();
+                            for (int a=0;a<globales.listaImagenesOnline.size();a++) {
+                                ContentValues valores = new ContentValues();
+                                valores.put("Imagen", globales.listaImagenesOnline.get(a));
+                                valores.put("id", globales.idItemActual);
+                                db.insert("temporal_imagenes", null, valores);
+                            }
                         }
                         System.out.println(devuelve);
                     }
@@ -171,87 +169,89 @@ public class guardar_online extends AsyncTask<String,Void , String> {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
             }
             return devuelve;
         }
         if (params[1] == "6") {   // enviamos la imagen al servidor
             estadoParaGuardarImagenes=false;
-            try {
-                HttpURLConnection urlConn;
-                url = new URL(cadena);
-                urlConn = (HttpURLConnection) url.openConnection();
-                urlConn.setDoInput(true);
-                urlConn.setDoOutput(true);
-                urlConn.setUseCaches(false);
-                urlConn.setRequestProperty("Content-Type", "application/json");
-                urlConn.setRequestProperty("Accept", "application/json");
-                urlConn.connect();
-                //Creo el Objeto JSON
-                JSONObject jsonParam=new JSONObject();
-                jsonParam.put("funcion","setImage");
-                jsonParam.put("image",params[2]);
-                jsonParam.put("id",""+globales.idItemActual+"");
-                // Envio los parámetros post.
-                OutputStream os = urlConn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(jsonParam.toString());
-                writer.flush();
-                writer.close();
-                int respuesta = urlConn.getResponseCode();
-                StringBuilder result = new StringBuilder();
-                if (respuesta == HttpURLConnection.HTTP_OK) {
-                    String line;
-                    BufferedReader br=new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-                    while ((line=br.readLine()) != null) {
-                        result.append(line);
-                        //response+=line;
+            globales.semaforo=false;
+            System.out.println("entro a guardar las imagenes");
+            temporal_imagenes temporal=temporal_imagenes.llamada(globales.context);
+            SQLiteDatabase db=temporal.getWritableDatabase();
+
+
+                try {
+                    HttpURLConnection urlConn=conexion(cadena);
+                    //Creo el Objeto JSON
+                    JSONObject jsonParam = new JSONObject();
+                    String direccionReal=params[2];
+                    Bitmap bitmap; // creamos un objeto de tipo bitmap para la imagen
+                    BitmapFactory.Options opciones=new BitmapFactory.Options();
+                    opciones.inSampleSize=3;
+                    bitmap= BitmapFactory.decodeFile(direccionReal,opciones); //creamos la imagen con la direccion real
+                    ByteArrayOutputStream baos=new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
+                    byte[] imagebyte=baos.toByteArray();
+                    String encondeImage = Base64.encodeToString(imagebyte, Base64.DEFAULT);
+                    jsonParam.put("image", encondeImage);
+                    System.out.print("se a cargado la imagen al json------------------------"+direccionReal);
+                    jsonParam.put("id", params[3]);
+                    // Envio los parámetros post.
+                    OutputStream os = urlConn.getOutputStream();
+                    BufferedWriter writer = new BufferedWriter(
+                            new OutputStreamWriter(os, "UTF-8"));
+                    writer.write(jsonParam.toString());
+                    writer.flush();
+                    writer.close();
+                    int respuesta = urlConn.getResponseCode();
+                    StringBuilder result = new StringBuilder();
+                    if (respuesta == HttpURLConnection.HTTP_OK) {
+                        String line;
+                        BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                        while ((line = br.readLine()) != null) {
+                            result.append(line);
+                            //response+=line;
+                        }
+                        //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                        System.out.println(result.toString() + " este error ocurrio ------------");
+                        JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                        //Accedemos al vector de resultados
+                        String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+                        if (resultJSON == "1") {      // hay un alumno que mostrar
+                            globales.semaforo = true;
+                            db.delete("temporal_imagenes", "id_auto=" + params[4], null);
+                            devuelve = "imagen  insertada correctamente";
+                            System.out.println(devuelve);
+                        } else if (resultJSON == "2") {
+                            globales.semaforo = true;
+                            devuelve = "la imagen no pudo insertarse";
+                            System.out.println(devuelve);
+                        }
                     }
-                    //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
-                    JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
-                    //Accedemos al vector de resultados
-                    String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
-                    if (resultJSON == "1") {      // hay un alumno que mostrar
-                        devuelve = "imagen  insertada correctamente";
-                        System.out.println(devuelve);
-                    } else if (resultJSON == "2") {
-                        devuelve = "la imagen no pudo insertarse";
-                        System.out.println(devuelve);
-                    }
+                } catch (MalformedURLException e) {
+                    devuelve="";
+                } catch (IOException e) {
+                    devuelve="";
+                } catch (JSONException e) {
+                    devuelve="";
+                }catch (Exception e){
+                    devuelve="ERROR:"+e.getMessage();
                 }
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                db.close();
             return devuelve;
         }
         if (params[1]=="7"){  // obteniendo los items
             try {
-                descargarImagenes=true;
+               // descargarImagenes=true;
                 System.out.println("entro a asynctask items");
-                HttpURLConnection urlConn;
-                url = new URL(cadena);
-                urlConn = (HttpURLConnection) url.openConnection();
-                urlConn.setDoInput(true);
-                urlConn.setDoOutput(true);
-                urlConn.setUseCaches(false);
-                urlConn.setRequestProperty("Content-Type", "application/json");
-                urlConn.setRequestProperty("Accept", "application/json");
-                urlConn.connect();
+                HttpURLConnection urlConn=conexion(cadena);
                 //Creo el Objeto JSON
                 JSONObject jsonParam=new JSONObject();
-                Cursor cursor=db_timeline.rawQuery(" select max("+Strings_db.string_db_timeline.numero+") as "+Strings_db.string_db_timeline.numero+","+Strings_db.string_db_timeline.id+" from "+Strings_db.string_db_timeline.nombre+" ",null);
-                if (cursor.moveToFirst()) {
-                    if ( cursor.getString(1)==null){
-                        jsonParam.put("id_itemActual","0");
-                    }else {
-                        jsonParam.put("id_itemActual", cursor.getString(1));
-                        System.out.println(cursor.getString(1) + "---");
-                    }
-                }
+                        jsonParam.put("id_itemActual", params[2]);
+                        System.out.println(params[2]+ "---");
+
                 // Envio los parámetros post.
                 OutputStream os = urlConn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
@@ -274,32 +274,35 @@ public class guardar_online extends AsyncTask<String,Void , String> {
 
                     String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
                     if (resultJSON == "1") {      // hay un alumno que mostrar
-                        JSONArray alumnosJSON = respuestaJSON.getJSONArray("items");   // estado es el nombre del campo en el JSON
-                        for(int i=0;i<alumnosJSON.length();i++){
-                            System.out.println(alumnosJSON);
+                        JSONArray itemsJSON = respuestaJSON.getJSONArray("items");   // estado es el nombre del campo en el JSON
+                        for(int i=0;i<itemsJSON.length();i++){
+                            System.out.println(itemsJSON);
                             db_timeline.execSQL("insert into "+Strings_db.string_db_timeline.nombre+"("+Strings_db.string_db_timeline.id+","+Strings_db.string_db_timeline.tipo+","+Strings_db.string_db_timeline.titulo+
                                     " ,"+Strings_db.string_db_timeline.descripcion+","+Strings_db.string_db_timeline.fecha_publicacion+","+Strings_db.string_db_timeline.fecha_evento+","+
                                     Strings_db.string_db_timeline.publicador+") values('"+
-                                    alumnosJSON.getJSONObject(i).getString("id_item")+"','"+
-                                    alumnosJSON.getJSONObject(i).getString("id_tipo")+"','"+
-                                    alumnosJSON.getJSONObject(i).getString("titulo")+"','"+
-                                    alumnosJSON.getJSONObject(i).getString("descripcion")+
-                                    "','"+alumnosJSON.getJSONObject(i).getString("fecha_pub")+
-                                    "','"+alumnosJSON.getJSONObject(i).getString("fecha_evento")+
-                                    "','"+alumnosJSON.getJSONObject(i).getString("id_admin")+"')");
+                                    itemsJSON.getJSONObject(i).getString("id_item")+"','"+
+                                    itemsJSON.getJSONObject(i).getString("id_tipo")+"','"+
+                                    itemsJSON.getJSONObject(i).getString("titulo")+"','"+
+                                    itemsJSON.getJSONObject(i).getString("descripcion")+
+                                    "','"+itemsJSON.getJSONObject(i).getString("fecha_pub")+
+                                    "','"+itemsJSON.getJSONObject(i).getString("fecha_evento")+
+                                    "','"+itemsJSON.getJSONObject(i).getString("id_admin")+"')");
                         }
-                        //  globales.cargarImagenes();
+                       devuelve="descargar completada";
 
                     } else if (resultJSON == "2") {
-                        devuelve = "no se an podido obtener las imagenes!!";
+                        devuelve = "Error de descarga, se Intentara nuevamente!!";
                         System.out.println(devuelve);
                     }
                 }
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                System.out.println("Errores:"+e.getMessage()+e.getCause()+"----------------------------------");
             } catch (IOException e) {
-                e.printStackTrace();
+                devuelve=e.getMessage();
             } catch (JSONException e) {
+                devuelve="El servidor No respondio Correctamente - "+e.getMessage();
+            } catch (Exception e){
+                devuelve="ocurrio un error al obtener item, se intentara mas tarde";
                 e.printStackTrace();
             }
             return devuelve;
@@ -308,27 +311,13 @@ public class guardar_online extends AsyncTask<String,Void , String> {
 
         if (params[1]=="8"){  // guardando las imagenes de un nuevo item
             try {
+                globales.semaforo=false;
                 System.out.println("entro a asynctask imagenes");
-                HttpURLConnection urlConn;
-                url = new URL(cadena);
-                urlConn = (HttpURLConnection) url.openConnection();
-                urlConn.setDoInput(true);
-                urlConn.setDoOutput(true);
-                urlConn.setUseCaches(false);
-                urlConn.setRequestProperty("Content-Type", "application/json");
-                urlConn.setRequestProperty("Accept", "application/json");
-                urlConn.connect();
+                HttpURLConnection urlConn=conexion(cadena);
                 //Creo el Objeto JSON
                 JSONObject jsonParam=new JSONObject();
-                Cursor cursor=db_imagenes2.rawQuery(" select max("+Strings_db.string_db_imagenes.numeroImagen+") as "+Strings_db.string_db_imagenes.numeroImagen+","+Strings_db.string_db_imagenes.id_imagen+" from "+Strings_db.string_db_imagenes.nombre,null);
-                if (cursor.moveToFirst()) {
-                    if ( cursor.getString(1)==null){
-                        jsonParam.put("id_itemActual","0");
-                    }else {
-                        jsonParam.put("id_itemActual", cursor.getString(1));
-                        System.out.println(cursor.getString(1) + "---valor de la tabla imagenes");
-                    }
-                }
+                        jsonParam.put("id_itemActual", params[2]);
+                        System.out.println(params[2] + "---valor de la tabla imagenes");
                 // Envio los parámetros post.
                 OutputStream os = urlConn.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(
@@ -351,31 +340,35 @@ public class guardar_online extends AsyncTask<String,Void , String> {
 
                     String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
                     if (resultJSON == "1") {      // hay un alumno que mostrar
-                        JSONArray alumnosJSON = respuestaJSON.getJSONArray("items");   // estado es el nombre del campo en el JSON
-                        for(int i=0;i<alumnosJSON.length();i++){
-                            System.out.println(alumnosJSON);
+                        JSONArray itemsJSON = respuestaJSON.getJSONArray("items");   // estado es el nombre del campo en el JSON
+                        for(int i=0;i<itemsJSON.length();i++){
+                            System.out.println(itemsJSON);
                                // estado es el nombre del campo en el JSON
-
-                                System.out.println(alumnosJSON.getJSONObject(i).getString("Idimage"));
-                                System.out.println(alumnosJSON.getJSONObject(i).getString("Imagen"));
+                                System.out.println(itemsJSON.getJSONObject(i).getString("Idimage"));
+                                System.out.println(itemsJSON.getJSONObject(i).getString("Imagen"));
                                 Bitmap foto;
-                                String ids = alumnosJSON.getJSONObject(i).getString("id");
-                                String data = alumnosJSON.getJSONObject(i).getString("Imagen");
+                                String ids = itemsJSON.getJSONObject(i).getString("id");
+                                String data = itemsJSON.getJSONObject(i).getString("Imagen");
+                                String numero=itemsJSON.getJSONObject(i).getString("Idimage");
                                 //data = alumnosJSON.getString(i);
                                 System.out.println(devuelve + " datos devueltos");
                                 byte[] cadenas = Base64.decode(data, Base64.DEFAULT);
                                 foto = BitmapFactory.decodeByteArray(cadenas, 0, cadenas.length);
-                                String direccionReal = guardarImagen(globales.context, "img-" + ids + i, foto);
+                                globales.ListaImagenes.add(foto);
+                                String direccionReal = guardarImagen(globales.context, "img-" + ids + numero, foto);
                                 System.out.println(direccionReal);
                                 db_imagenesconexion.execSQL("insert into " + Strings_db.string_db_imagenes.nombre + "(" +
                                         Strings_db.string_db_imagenes.id_imagen + "," + Strings_db.string_db_imagenes.direccion +
-                                        ") values(" +
+                                        ","+Strings_db.string_db_timeline.numero+") values(" +
                                         ids +
-                                        ",'" + direccionReal + "')");
+                                        ",'" + direccionReal + "','"+numero+"')");
+                            globales.semaforoImagenes=true;
+
 
                         }
 
                     } else if (resultJSON == "2") {
+                        globales.semaforoImagenes=true;
                         devuelve = "no se an podido obtener las imagenes!!";
                         System.out.println(devuelve);
                     }
@@ -386,6 +379,9 @@ public class guardar_online extends AsyncTask<String,Void , String> {
                 e.printStackTrace();
             } catch (JSONException e) {
                 e.printStackTrace();
+            }
+            catch (Exception e){
+                devuelve="error, se intentara descargar la imagen nuevamente en breve";
             }
             return devuelve;
         }
@@ -399,7 +395,9 @@ public class guardar_online extends AsyncTask<String,Void , String> {
     }
     @Override
     protected void onPostExecute(String s) {
-        System.out.println(s);
+        if (s!=""){
+            Toast.makeText(globales.context,s,Toast.LENGTH_LONG).show();
+        }
         if (estadoParaGuardarImagenes){
             globales.guardarImagenes();
         }
@@ -408,8 +406,11 @@ public class guardar_online extends AsyncTask<String,Void , String> {
             globales.obtenerItem();
         }
         else if (descargarImagenes){
-            globales.descargarImagenes();
+           // globales.descargarImagenes();
         }
+        globales.semaforo=true;
+        globales.semaforoImagenes=true;
+        fragment_timeLine.recargar();
         //super.onPostExecute(s);
     }
     @Override
@@ -437,6 +438,25 @@ public class guardar_online extends AsyncTask<String,Void , String> {
             ex.printStackTrace();
         }
         return myPath.getAbsolutePath();
+    }
+
+    public HttpURLConnection conexion(String cadena) throws MalformedURLException {
+        HttpURLConnection urlConn;
+        URL url = new URL(cadena);
+        try {
+            urlConn = (HttpURLConnection) url.openConnection();
+        urlConn.setDoInput(true);
+        urlConn.setDoOutput(true);
+        urlConn.setUseCaches(false);
+        urlConn.setRequestProperty("Content-Type", "application/json");
+        urlConn.setRequestProperty("Accept", "application/json");
+            urlConn.connect();
+        } catch (IOException e) {
+            urlConn=null;
+           return urlConn;
+        }
+
+        return urlConn;
     }
 }
 

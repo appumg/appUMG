@@ -87,6 +87,9 @@ public class datos_pensum_psicologia {
         Sem10.add("Practica II");
         Sem10.add("Elaboración de Trabajo de Graduación II");
 
+        List<String>  Cordinador=new ArrayList<String>();;
+        Cordinador.add("Licenciada Candy Lisely Barrios\n");
+
 
         horario_semestreDetalle.put("Primer Semestre", Sem1);
         horario_semestreDetalle.put("Segundo Semestre", Sem2);
@@ -98,6 +101,7 @@ public class datos_pensum_psicologia {
         horario_semestreDetalle.put("Octavo Semestre", Sem8);
         horario_semestreDetalle.put("Noveno Semestre", Sem9);
         horario_semestreDetalle.put("Decimo Semestre", Sem10);
+        horario_semestreDetalle.put("Coordinador", Cordinador);
 
 
 

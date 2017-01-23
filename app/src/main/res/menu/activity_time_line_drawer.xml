@@ -5,42 +5,30 @@
 
         <item
             android:id="@+id/nav_timeLine"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/noticias"
             android:title="Noticias y Eventos" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/carreras"
             android:title="Carreras" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="direccion academica" />
+
         <item
             android:id="@+id/menu_sobreUMG"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/universidad"
             android:title="sobre UMG" />
 
-        <item
-            android:id="@+id/InfoU"
-
-            android:title="Info U" />
     </group>
 
-    <item android:title="Comunicacion">
+    <item android:title="Otras Opciones">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Contactenos" />
-
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Creditos" />
             <item
                 android:id="@+id/nav_login"
-                android:icon="@drawable/ic_menu_gallery"
-                android:title="Logerse" />
+                android:icon="@drawable/cerrar"
+                android:title="Logerse/ Cerrar Sesión" />
 
 
         </menu>

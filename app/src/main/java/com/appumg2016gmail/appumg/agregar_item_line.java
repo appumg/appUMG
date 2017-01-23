@@ -1,17 +1,21 @@
 package com.appumg2016gmail.appumg;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -22,10 +26,44 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -67,7 +105,7 @@ private ImageButton agregar;
     private int DB_yearActual;
     private String DB_fechaActual;
     private String DB_horaActual;
-    private int DB_publicador=2;
+    private String DB_publicador=globales.publicador;
     private ArrayList<String> ListaImagenes=new ArrayList<>();
     //------------variables comprobadoras de estados
     private int c_estadoNoticia,c_facultad;
@@ -100,7 +138,7 @@ private ImageButton agregar;
         db_imagenesconexion=imagenesConexion.getWritableDatabase();
         db_itemsTimeLine=itemsTimeLine.getWritableDatabase();
         db_timeline=timeLine.getWritableDatabase();
-
+        globales.listaImagenesOnline.clear();
 //------------------agregando referencias a los campos de en la vista
         titulo=(EditText)findViewById(R.id.titulo);
         agregar=(ImageButton)findViewById(R.id.agregar);
@@ -109,23 +147,12 @@ private ImageButton agregar;
         fechas=(TextView)findViewById(R.id.fecha);
         imagenes=(EditText) findViewById(R.id.imagenes);
         tipo_evento=(Spinner)findViewById(R.id.tipo_evento);
-        publics=(Spinner)findViewById(R.id.publico);
-
-
 //---------------------preparo los adaptadores para los spinners
         db_tipo_evento eventos=db_tipo_evento.llamada(this);
-        SQLiteDatabase db_eventos=eventos.getWritableDatabase();
-        //Cursor db_eventosCursor= db_eventos.rawQuery("select * from "+Strings_db.string_db_tipo_evento.nombre,null);
-      //  SimpleCursorAdapter itemsEventos=new SimpleCursorAdapter(this,R.layout.support_simple_spinner_dropdown_item,db_eventosCursor,new String[]{"tipo_evento"}, new int[]{R.id.text1});
-       // itemsEventos.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
-        //tipo_evento.setAdapter(itemsEventos);
         ArrayAdapter<String> public_opciones=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, publico);
         ArrayAdapter<String> opcion =new ArrayAdapter(this,R.layout.support_simple_spinner_dropdown_item, opciones);
         //agrego los adatadores a los items
         tipo_evento.setAdapter(opcion);
-        publics.setAdapter(public_opciones);
-
-
 //------------------- obteniendo valores de los spinners
 
         tipo_evento.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -133,7 +160,6 @@ private ImageButton agregar;
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setDB_tipoPublicacion(position+1);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -141,19 +167,7 @@ private ImageButton agregar;
         });
 
 
-        publics.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                setDB_facultad(publics.getSelectedItem().toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
     }
-
 
 //------------------------metodo que captura el evento del boton agregar imagenes
     public void agregar(View view){
@@ -162,29 +176,19 @@ private ImageButton agregar;
                       intent.setType("image/*");
                       startActivityForResult(Intent.createChooser(intent,"seleccionar la imagen"), SELECT_PICTURE);
     }
-
-
-    public void cancelar(View view){
-        this.finish();
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode==RESULT_OK){
                 switch (requestCode){
                     case SELECT_PICTURE:
-                        Bitmap bitmap; // creamos un objeto de tipo bitmap para la imagen
+
                         Uri direccion=data.getData();
                         contador++;
                         imagenes.append("\n "+ contador +".-"+obtenerDireccionReal(direccion));
                         ListaImagenes.add(obtenerDireccionReal(direccion));
                         String direccionReal=obtenerDireccionReal(direccion);
-                        bitmap= BitmapFactory.decodeFile(direccionReal); //creamos la imagen con la direccion real
-                        ByteArrayOutputStream baos=new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG,100,baos);
-                        byte[] imagebyte=baos.toByteArray();
-                        String encondeImage = Base64.encodeToString(imagebyte, Base64.DEFAULT);
-                        globales.listaImagenesOnline.add(encondeImage);
+                        globales.listaImagenesOnline.add(direccionReal);
                         // llamada al metodo que obtiene la direccion fisica en memoria de la imagen
                         break;
                 }
@@ -199,7 +203,6 @@ private ImageButton agregar;
     }
 //------------------------------------------ mostrando calendario
     public void calendario(View view){
-
         final Calendar calendario=Calendar.getInstance();
         DB_diaActual=calendario.get(Calendar.DAY_OF_MONTH);
         DB_mesActual=calendario.get(Calendar.MONTH)+1;
@@ -208,6 +211,7 @@ private ImageButton agregar;
         DatePickerDialog dialogoCalendario=new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                monthOfYear++;
                 V_fecha=""+year +"-"+monthOfYear+"-"+dayOfMonth;
                 fechas.setText(V_fecha+" "+tiempos);
                 DB_fecha=V_fecha;
@@ -229,7 +233,7 @@ private ImageButton agregar;
             DB_horaActual = "0" + horas + ":0" + minutos + ":00";
         }
         else{
-            DB_horaActual=horas+"-"+"minutos"+":00";
+            DB_horaActual=horas+":"+minutos+":00";
         }
         final TimePickerDialog tiempo=new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -262,18 +266,15 @@ private ImageButton agregar;
         if (ListaImagenes.size()==0){
             estado |=true;
         }
-            estado |=getDB_facultad().isEmpty();
-
         // si el stado esta en falso todos los campos contienen datos
         if (estado){
             Snackbar.make(view,"alguno de los campos esta vacio, porfavor completelo",Snackbar.LENGTH_LONG).show();
         }else{
             guardar_online guardarlo=new guardar_online();
-            guardarlo.execute(INSERT,"1",""+getDB_tipoPublicacion(),""+DB_publicador,getBD_titulo(),getDB_descripcion(),DB_fechaActual+" "+DB_horaActual,fechas.getText().toString(),"1");
+            guardarlo.execute(INSERT,"1",""+getDB_tipoPublicacion(),""+DB_publicador,getBD_titulo(),getDB_descripcion(),DB_fechaActual+" "+DB_horaActual,V_fecha+" "+tiempos,"1");
             this.finish(); // cerramos la actividad
         }
     }
-
     //evento carga los registros a la pantalla para actualizarlos
     public void cargarParaActualizar(){
         Cursor items=db_timeline.rawQuery("select * from "+Strings_db.string_db_timeline.nombre,null);
@@ -297,7 +298,27 @@ private ImageButton agregar;
         valores.put(Strings_db.string_db_timeline.publicador,getDB_publicador());
         db_timeline.update(Strings_db.string_db_timeline.nombre,valores,Strings_db.string_db_timeline.id+"="+idActualizar,null);
     }
-
+    public void cancelar(View vi){
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("Alerta");
+        builder.setMessage("¿Seguro que quieres salir sin guardar?");
+        builder.setNegativeButton("no quiero salir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.setPositiveButton("Si, quiero salir", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cerrar();
+            }
+        });
+        builder.show();
+    }
+    public void cerrar(){
+        this.finish();
+    }
     ///----------------- geters y setters de las variables para la base de datos
     public String getBD_titulo() {
         return BD_titulo;
@@ -309,12 +330,6 @@ private ImageButton agregar;
         return DB_tipoPublicacion;
     }
     public void setDB_tipoPublicacion(int DB_tipoPublicacion) {this.DB_tipoPublicacion = DB_tipoPublicacion;}
-    public String getDB_facultad() {
-        return DB_facultad;
-    }
-    public void setDB_facultad(String DB_facultad) {
-        this.DB_facultad = DB_facultad;
-    }
     public String getDB_descripcion() {
         return DB_descripcion;
     }
@@ -324,21 +339,10 @@ private ImageButton agregar;
     public String getDB_fecha() {
         return DB_fecha;
     }
-    public void setDB_fecha(String DB_fecha) {
-        this.DB_fecha = DB_fecha;
-    }
-    public String getDB_hora() {
-        return DB_hora;
-    }
-    public void setDB_hora(String DB_hora) {
-        this.DB_hora = DB_hora;
-    }
-    public int getDB_publicador() {
+     public String getDB_publicador() {
         return DB_publicador;
     }
-    public void setDB_publicador(int DB_publicador) {
-        this.DB_publicador = DB_publicador;
-    }
+
 
 
 

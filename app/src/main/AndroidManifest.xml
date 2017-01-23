@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Acceso a Escribir en memoria -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <!-- Acceso leer en memoria -->
     <application
         android:allowBackup="true"
@@ -20,7 +26,6 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -32,6 +37,7 @@
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -40,16 +46,27 @@
         <activity
             android:name=".time_line"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".creditos"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDJtWaWTkWGKm-NphvsKVfqFciqtUAPZnU" />
-
-        <activity android:name=".carrerasU"></activity>
+        <activity android:name=".carrerasU" />
+        <receiver android:name=".AutoArranque">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
         <service
             android:name=".notificaciones"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+        <activity
+            android:name=".login"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".eliminar"></activity>
+
     </application>
+
 
 </manifest>

@@ -6,17 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-<android.support.v4.widget.SwipeRefreshLayout
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:id="@+id/swipe"
+    tools:openDrawer="start"
+
     >
     <include
         layout="@layout/app_bar_time_line"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</android.support.v4.widget.SwipeRefreshLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -24,7 +20,9 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_time_line"
-        app:menu="@menu/activity_time_line_drawer" />
+        app:menu="@menu/activity_time_line_drawer"
+
+        android:theme="@android:style/Theme.Material.Dialog.NoActionBar" />
 
 
 

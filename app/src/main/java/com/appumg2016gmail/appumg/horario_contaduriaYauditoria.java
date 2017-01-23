@@ -48,7 +48,7 @@ public class horario_contaduriaYauditoria extends Fragment {
 
         List<List<String>> catedraticos = new ArrayList<List<String>>();
         catedraticos.add(new ArrayList<String>());
-        catedraticos.get(0).add("Lic. Leticia Marilú Barrios Gabriel");
+        catedraticos.get(0).add("Licda. Leticia Marilú Barrios Gabriel");
         catedraticos.get(0).add("Lic. Erick Ariel Batres Ramos");
         catedraticos.get(0).add("Lic. Rodolfo Gonzáles Romero");
         catedraticos.get(0).add("Lic. Calderón Becerra");
@@ -56,9 +56,9 @@ public class horario_contaduriaYauditoria extends Fragment {
 
         catedraticos.add(new ArrayList<String>());
         catedraticos.get(1).add("Lic. Erick Estuardo Castellanos");
-        catedraticos.get(1).add("Lic. Iris Balvina Ramos Suñiga");
+        catedraticos.get(1).add("Licda. Iris Balvina Ramos Súñiga");
         catedraticos.get(1).add("Lic. José Armando Muralles Maldonado");
-        catedraticos.get(1).add("Lic. Herbert Vinicio Garcia");
+        catedraticos.get(1).add("Lic. Herbert Vinicio García");
         catedraticos.get(1).add("--------------------");
 
         catedraticos.add(new ArrayList<String>());
@@ -79,7 +79,7 @@ public class horario_contaduriaYauditoria extends Fragment {
         catedraticos.get(4).add("Lic. Amado Nery Morales Ruiz");
         catedraticos.get(4).add("Lic. Tobias Valle");
         catedraticos.get(4).add("Lic. Lino Andino Diaz");
-        catedraticos.get(4).add("Lic. Fabiola Peche");
+        catedraticos.get(4).add("Licda. Fabiola Peche");
         catedraticos.get(4).add("--------------------");
 
         catedraticos.add(new ArrayList<String>());

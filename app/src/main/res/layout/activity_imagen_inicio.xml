@@ -7,17 +7,16 @@
     android:layout_height="match_parent"
     tools:context="com.appumg2016gmail.appumg.imagen_inicio"
     android:elevation="1dp"
-    android:background="#ffffff"
+    android:background="#00529e"
     >
     <!--android:background="@mipmap/paje" -->
-
 
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/umg_logo"
-        android:id="@+id/imageView3"
+        app:srcCompat="@drawable/umg_logo2"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView2" />
 </RelativeLayout>

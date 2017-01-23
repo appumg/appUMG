@@ -8,8 +8,9 @@
     android:background="@color/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:fitsSystemWindows="true"
-    android:id="@+id/toolBar"
+    android:id="@+id/toolBar_tabs"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    app:popupTheme="@style/AppTheme.PopupOverlay"
 
     >
 

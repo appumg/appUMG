@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -26,70 +27,31 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 
 public class time_line extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView TimeLine;
-    private ArrayAdapter<String> adaptador;
-    private AdaptadorContentTimeLine adaptadorContentTimeLine;
-    private LinearLayout beahavior;
-    private GridView galeria;
-    private ArrayList<Integer> id_items=new ArrayList<>();
-    private SwipeRefreshLayout refrescar;
+    private int id=0;//=R.id.nav_timeLine;
+    private boolean semaforo=false;
+    private static FloatingActionsMenu boton_accion;
 
-    private ArrayList<Uri> imagenes=new ArrayList<>();
-///----- creamos objetos de la base de datos y de la clase que crea la base de datos
-    private SQLiteDatabase itemsConenedor;
-    private db_itemsTimeLine db_itemsTimeLine;
-    private int version=1;
-    private int id=R.id.nav_timeLine;
+    Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_line);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        onNavigationItemSelected(null);
+       // onNavigationItemSelected(null);
         globales.manager=getSupportFragmentManager();
-        galeria=(GridView) findViewById(R.id.galeria);
-        refrescar=(SwipeRefreshLayout)findViewById(R.id.swipe);
-        refrescar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                boolean estado=onNavigationItemSelected(null);
-                if (estado){
-                    refrescar.setRefreshing(false);
-                }
-            }
-        });
-/// ---- cargando las bases de datos
+        boton_accion=(FloatingActionsMenu)findViewById(R.id.fab_menu);
+        //galeria=(GridView) findViewById(R.id.galeria);
 
 
-
-
-//        galeria.setAdapter(new galeria_adaptador(this));
-
-
-        beahavior=(LinearLayout) findViewById(R.id.behavior);
-        final BottomSheetBehavior bottomSheetBehavior=BottomSheetBehavior.from(beahavior);
-
-        // ArrayList<Uri> imagenes=new ArrayList<Uri>(){};
-
-        // asignnando el adaptador al listview principal
-      //  TimeLine = (ListView) findViewById(R.id.Ttimeline);
-        //---- llamamos el metodo que cargar la linea de tiempo
-        //se le agrega el evento on click para capturar las pulsaciones
-      /*  TimeLine.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                globales.id_imagen=i+1;
-                //   bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
-        });
-*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this,drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -99,37 +61,20 @@ public class time_line extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                id = item.getItemId();
-                onNavigationItemSelected(null);
-                if (id == R.id.nav_timeLine) {
-                    Toast.makeText(time_line.this, ""+id, Toast.LENGTH_SHORT).show();
-                } else if (id == R.id.nav_gallery) {
-
-              } else if (id == R.id.nav_slideshow) {
-
-
-              } else if (id == R.id.menu_sobreUMG) {
-
-                  Intent i=new Intent(time_line.this, info_u.class);
-                  startActivity(i);
-
-
-              } else if (id == R.id.nav_share) {
-
-              } else if (id == R.id.nav_send) {
-
-                }
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
+        id=R.id.nav_timeLine;
+       // semaforo=true;
+        onNavigationItemSelected(null);
 
     }
 
+     public static void ocultar(){
+         if (globales.mostrarFloating){
+             boton_accion.setVisibility(View.VISIBLE);
+
+         }else{
+             boton_accion.setVisibility(View.INVISIBLE);
+         }
+     }
 
 
     @Override
@@ -141,56 +86,46 @@ public class time_line extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    /*
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.time_line, menu);
-            return true;
-        }
 
-        /*@Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
-
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        // int id = item.getItemId();
+        ocultar();
+        if(item!=null) {
 
+            id = item.getItemId();
+        }
         Fragment fragment=null;
         boolean estado=false;
         if (id == R.id.nav_timeLine) {
             fragment=new fragment_timeLine();
+                toolbar.setTitle("Noticias");
+
             estado=true;
         } else if (id == R.id.nav_gallery) {
             Intent i=new Intent(time_line.this, carrerasU.class);
             startActivity(i);
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.menu_sobreUMG) {
+        }  else if (id == R.id.menu_sobreUMG) {
             Intent i=new Intent(time_line.this, info_u.class);
             startActivity(i);
 
-        } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.nav_send) {
+            startActivity(new Intent(time_line.this, creditos.class));
 
+        }else if(id==R.id.nav_login){
+
+
+            if (globales.mostrarFloating){
+                globales.mostrarFloating=false;
+                SQLiteDatabase db;
+                db_login login=db_login.llamada(getApplicationContext());
+                db=login.getWritableDatabase();
+                db.delete("login",null,null);
+                ocultar();
+            }else {
+                startActivity(new Intent(time_line.this, login.class));
+            }
         }
         if(estado){
             getFragmentManager().beginTransaction().replace(R.id.contenedor,fragment).commit();
@@ -208,10 +143,8 @@ public class time_line extends AppCompatActivity
     }
 
     public void noticia(View v) {
-
-        Snackbar.make(v,"felicidades sin querer as creado una base de datos de 5000000 campos ",Snackbar.LENGTH_LONG).show();
+       startActivity(new Intent(time_line.this,eliminar.class));
     }
 
-    ///------ metodo que se ejecuta para cargar los items que se muestran en la linea de tiempo
 
 }

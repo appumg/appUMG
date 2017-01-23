@@ -48,39 +48,47 @@ public class horario_administracionEmrpresas extends Fragment {
 
         List<List<String>> catedraticos = new ArrayList<List<String>>();
         catedraticos.add(new ArrayList<String>());
-        catedraticos.get(0).add("Lic. Gloria Catalan de Marroquin");
-        catedraticos.get(0).add("Lic. Heidy Jilissa Chan Pineda");
+        catedraticos.get(0).add("Licda. Gloria Catalán de Marroquín");
+        catedraticos.get(0).add("Licda. Heidy Jilissa Chan Pineda");
         catedraticos.get(0).add("Lic. Carlos Betancourt");
         catedraticos.get(0).add("Lic. José Luis Zapata Hernández");
         catedraticos.get(0).add("Lic. Erick Estuardo Castellanos");
 
         catedraticos.add(new ArrayList<String>());
         catedraticos.get(1).add("Lic. Carlos Betancourt");
-        catedraticos.get(1).add("Lic. Gloria Catalan de Marroquin");
+        catedraticos.get(1).add("Licda. Gloria Catalán de Marroquín");
         catedraticos.get(1).add("Lic. José Luis Zapata Hernández");
         catedraticos.get(1).add("Lic. Erick Estuardo Castellanos");
         catedraticos.get(1).add("Lic. Eick Ariel Batres Ramos");
 
         catedraticos.add(new ArrayList<String>());
-        catedraticos.get(2).add("Lic. Jackeline Camacho");
+        catedraticos.get(2).add("Licda. Jackeline Camacho");
         catedraticos.get(2).add("Lic. Oniel Benitez");
         catedraticos.get(2).add("Lic. Gustavo Arnoldo Ara Arriola");
         catedraticos.get(2).add("Lic. Eick Ariel Batres Ramos");
-        catedraticos.get(2).add("Lic. Vilma Pereira");
+        catedraticos.get(2).add("Licda. Vilma Pereira");
 
         catedraticos.add(new ArrayList<String>());
-        catedraticos.get(3).add("--------------------");
+        catedraticos.get(3).add("Licda. Heidy Julissa Chan Pineda");
         catedraticos.get(3).add("Lic. Herbert Vinicio Garcia");
-        catedraticos.get(3).add("Lic. Ramiro Menéndez Ordoñez");
-        catedraticos.get(3).add("Lic. José Emilio Madrid Cruz");
-        catedraticos.get(3).add("Ing. Rodolfo González Romero");
+        catedraticos.get(3).add("Lic. Amado Nery Morales Ruiz");
+        catedraticos.get(3).add("Licda. Heidy Julissa Chan Pineda");
+        catedraticos.get(3).add("Lic. Amado Nery Morales Ruiz");
 
         catedraticos.add(new ArrayList<String>());
         catedraticos.get(4).add("--------------------");
-        catedraticos.get(4).add("Lic. Ludwing Rubén Romero");
-        catedraticos.get(4).add("Ing. Rodolfo Gonzáles Romero");
+        catedraticos.get(4).add("Lic. Herbert Vinicio Garcia");
         catedraticos.get(4).add("Lic. Ramiro Menéndez Ordoñez");
-        catedraticos.get(4).add("Lic. Gustavo Arnoldo Ara Arriola");
+        catedraticos.get(4).add("Lic. José Emilio Madrid Cruz");
+        catedraticos.get(4).add("Ing. Rodolfo Gonzalez Romero");
+
+
+        catedraticos.add(new ArrayList<String>());
+        catedraticos.get(5).add("--------------------");
+        catedraticos.get(5).add("Lic. Ludwing Rubén Romero Ramirezoo");
+        catedraticos.get(5).add("Ing. Rodolfo Gonzáles Romero");
+        catedraticos.get(5).add("Lic. Ramiro Menéndez Ordoñez");
+        catedraticos.get(5).add("Lic. Gustavo Arnoldo Ara Arriola");
 
         adaptador=new adapter_lista_horario(getContext(),horario_semestre,horario_lista,hora_curso,catedraticos);
         listaExpandible.setAdapter(adaptador);

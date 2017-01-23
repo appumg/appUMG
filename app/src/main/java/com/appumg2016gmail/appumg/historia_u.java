@@ -6,7 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ExpandableListView;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 
 /**
@@ -14,6 +18,11 @@ import android.widget.TextView;
  */
 public class historia_u extends Fragment {
 
+    ExpandableListView ELV_umg;
+    LinkedHashMap<String, List<String>> data;
+    List<String> subData;
+    adaptador_sobreUMG adaptador;
+    ArrayList<horario_pensum> hora_curso;
 
     public historia_u() {
         // Required empty public constructor
@@ -25,15 +34,13 @@ public class historia_u extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View vista= inflater.inflate(R.layout.fragment_historia_u, container, false);
-    /*    TextView historia=(TextView)vista.findViewById(R.id.TV_historia);
-          historia.setText("El primer ciclo académico de la Universidad Mariano Gálvez, se inició el 2 de marzo de 1966 en acto solemne en el que el Rector de la Universidad de San Carlos de Guatemala, pronunció el discurso de salutación y el primer Rector de la naciente Universidad pronunció el discurso de inauguración.\n" +
-                "\n" +
-                "En 1968, la Universidad Mariano Gálvez abrió las carreras de Derecho, Economía, Ingeniería Civil, Administración de Empresas, Teología y Humanidades. Posteriormente se abrieron carreras cortas en Pedagogía y Artes Plásticas, Gerencia, Economía Aduanera y Visita Médica.\n" +
-                "\n" +
-                "Las primeras instalaciones utilizadas por la Universidad fueron ambientes del edificio de la Antigua Escuela de Enfermeras del Hospital Americano.\n" +
-                "\n" +
-                "En el año de 1972 la Universidad inició su traslado al Campus Central actual, donde ha desarrollado una infraestructura física que incluye complejos para Observatorio, Biblioteca, un Teatro al aire libre, jardines, un bosque ecológico, un centro de cómputo e instalaciones deportivas.");
-*/
+        ELV_umg=(ExpandableListView) vista.findViewById(R.id.ELV_umg);
+        data=data_infoUMG.getInformacion();
+        subData=new ArrayList<String>(data.keySet());
+
+        adaptador=new adaptador_sobreUMG(getContext(), data,subData);
+        ELV_umg.setAdapter(adaptador);
+
         return vista;
     }
 
